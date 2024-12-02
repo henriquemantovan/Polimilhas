@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "xrpl": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1"
   }
 }
