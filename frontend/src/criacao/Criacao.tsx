@@ -1,87 +1,180 @@
-import { useNavigate } from "react-router-dom";
-import { useAccount } from 'wagmi';
 
+import React, { useState } from "react";
+import Header from "../Header";
 
-export default function App() {
-  const navigate = useNavigate();
-  const { address } = useAccount(); // Obtém o endereço da MetaMask
+const Criacao: React.FC = () => {
+  const [formData, setFormData] = useState({
+    tokenName: "",
+    symbol: "",
+    supply: "",
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Token criado com os dados:", formData);
+    alert("Token criado com sucesso!");
+    setFormData({
+      tokenName: "",
+      symbol: "",
+      supply: "",
+    });
+  };
 
   return (
-    <main
+    <div
       style={{
+        background: "linear-gradient(to bottom right, #e0f7ff, #ffffff)",
+        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
         alignItems: "center",
-        height: "70vh",
+        justifyContent: "center",
+        padding: "2rem",
+        fontFamily: "'Asap', sans-serif",
       }}
-    >
-      <h1
-        style={{
-          marginBottom: "40px",
-          fontSize: "3.5rem",
-          textAlign: "center",
-        }}
-      >
-        Painel do Criador
+    >    <Header />
+
+      <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", color: "#006c91" }}>
+        Criar Token
       </h1>
-      <button
-        className="botao"
-        style={{ 
-          display: "flex", 
-          justifyContent: "center", 
-          alignItems: "center", 
-          padding: "20px", 
-          fontSize: "25px", 
-          margin: "15px 0", 
-          width: "280px",
-          textAlign: "center"
+      <p style={{ fontSize: "1rem", marginBottom: "2rem", color: "#42455a" }}>
+        Preencha os detalhes abaixo para criar um novo token.
+      </p>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          background: "#ffffff",
+          padding: "2rem",
+          borderRadius: "12px",
+          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
+          width: "100%",
+          maxWidth: "500px",
         }}
-        onClick={() => navigate("/vendor/newtasks")}  
       >
+        <div style={{ marginBottom: "1.5rem" }}>
+          <label
+            htmlFor="tokenName"
+            style={{
+              display: "block",
+              marginBottom: "0.5rem",
+              fontSize: "1rem",
+              color: "#006c91",
+            }}
+          >
+            Nome do Token
+          </label>
+          <input
+            type="text"
+            id="tokenName"
+            name="tokenName"
+            value={formData.tokenName}
+            onChange={handleInputChange}
+            required
+            style={{
+              width: "100%",
+              padding: "0.8rem",
+              fontSize: "1rem",
+              borderRadius: "8px",
+              border: "1px solid #ddd",
+              outline: "none",
+            }}
+          />
+        </div>
 
-        <span style={{ flex: 1, textAlign: "left" }}>Novas Tarefas</span>
-      </button>
-      <button
-        className="botao"
-        style={{ 
-          display: "flex", 
-          justifyContent: "center", 
-          alignItems: "center", 
-          padding: "20px", 
-          fontSize: "30px", 
-          margin: "15px 0", 
-          width: "280px",
-        }}
-        onClick={() => navigate("/vendor/withdraw")} 
->
-        <span style={{ flex: 1, textAlign: "left" }}>Saque</span>
-      </button>
+        <div style={{ marginBottom: "1.5rem" }}>
+          <label
+            htmlFor="symbol"
+            style={{
+              display: "block",
+              marginBottom: "0.5rem",
+              fontSize: "1rem",
+              color: "#006c91",
+            }}
+          >
+            Símbolo
+          </label>
+          <input
+            type="text"
+            id="symbol"
+            name="symbol"
+            value={formData.symbol}
+            onChange={handleInputChange}
+            required
+            style={{
+              width: "100%",
+              padding: "0.8rem",
+              fontSize: "1rem",
+              borderRadius: "8px",
+              border: "1px solid #ddd",
+              outline: "none",
+            }}
+          />
+        </div>
 
-      <button
-        className="botao"
-        style={{ 
-          display: "flex", 
-          justifyContent: "center", 
-          alignItems: "center", 
-          padding: "20px", 
-          fontSize: "30px", 
-          margin: "15px 0", 
-          width: "280px",
-        }}
-  onClick={() => {
-    if (address) {
-      navigate(`/vendor/mytasks/${address}`);
-    } else {
-      console.error('Conecte-se ao MetaMask');
-    }
-  }}
-  disabled={!address} 
-      >
-    <span style={{ flex: 1, textAlign: "center", fontSize: "20px" }}>Minhas Tarefas</span>
-    </button>
+        <div style={{ marginBottom: "2rem" }}>
+          <label
+            htmlFor="supply"
+            style={{
+              display: "block",
+              marginBottom: "0.5rem",
+              fontSize: "1rem",
+              color: "#006c91",
+            }}
+          >
+            Suprimento Inicial
+          </label>
+          <input
+            type="number"
+            id="supply"
+            name="supply"
+            value={formData.supply}
+            onChange={handleInputChange}
+            required
+            style={{
+              width: "100%",
+              padding: "0.8rem",
+              fontSize: "1rem",
+              borderRadius: "8px",
+              border: "1px solid #ddd",
+              outline: "none",
+            }}
+          />
+        </div>
 
-
-    </main>
+        <button
+          type="submit"
+          style={{
+            width: "100%",
+            padding: "1rem",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            color: "#ffffff",
+            backgroundColor: "#006c91",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+            transition: "background-color 0.3s ease",
+          }}
+          onMouseOver={(e) =>
+            (e.currentTarget.style.backgroundColor = "#004f6e")
+          }
+          onMouseOut={(e) =>
+            (e.currentTarget.style.backgroundColor = "#006c91")
+          }
+        >
+          Criar Token
+        </button>
+      </form>
+    </div>
   );
-}
+};
+
+export default Criacao;
