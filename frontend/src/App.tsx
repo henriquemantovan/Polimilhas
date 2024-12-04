@@ -153,7 +153,7 @@ function Home() {
   return (
     <div 
       style={{ 
-        background: '#42455a', 
+        background: '#161c2d', 
         minHeight: '100vh', 
         fontFamily: "'Asap', sans-serif" 
       }}
@@ -229,7 +229,7 @@ function Home() {
       right: 0,
       bottom: 0,
       background: `url(${arquivoIcon}) no-repeat center center`, 
-      backgroundSize: "55%", 
+      backgroundSize: "53%", 
       opacity: 0.08, 
       zIndex: 1, 
     }}
@@ -353,12 +353,12 @@ function Home() {
             border: "2px solid #006c91", 
             borderRadius: "8px", 
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", 
-            background: "#e0f7ff", // Fundo azul claro para todos os containers
+            background: "#e0f7ff", 
             display: "flex", 
             flexDirection: "column", 
             alignItems: "center", 
             justifyContent: "center", 
-            height: "250px", // Altura dos containers
+            height: "250px", 
           }}
         >
           <p 
@@ -394,12 +394,12 @@ function Home() {
             border: "2px solid #006c91", 
             borderRadius: "8px", 
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", 
-            background: "#e0f7ff", // Fundo azul claro para todos os containers
+            background: "#e0f7ff", 
             display: "flex", 
             flexDirection: "column", 
             alignItems: "center", 
             justifyContent: "center", 
-            height: "250px", // Altura dos containers
+            height: "250px", 
           }}
         >
           <p 
@@ -443,7 +443,8 @@ function Home() {
     <h2 style={{ 
       fontSize: "3rem", // Título maior
       marginBottom: "0.8rem", 
-      textAlign: "center" 
+      textAlign: "center",
+      color: '#fff'
     }}>
       Objetivo 
     </h2>
@@ -555,7 +556,6 @@ function Home() {
     </p>
   </div>
 
-  {/* Imagem de fundo embaçada e com opacidade ajustada */}
   <div 
     style={{
       position: "absolute",
