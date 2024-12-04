@@ -9,7 +9,7 @@ import fundo from "../images/fundo.png"
 import Header from "./Header";
 import Criacao from "./criacao/Criacao";
 import Resgate from "./resgate/Resgate";
-import Tranferir from "./transferir/Transferir";
+import Transferir from "./transferir/Transferir";
 
 function NavigationBar() {
   const [activeSection, setActiveSection] = useState('home');
@@ -254,8 +254,8 @@ function Home() {
       bottom: 0,
       background: `url(${fundo}) no-repeat center center`,
       backgroundSize: "cover", 
-      opacity: 0.2, 
-      zIndex: 0, 
+      opacity: 0.7, 
+      zIndex: -1, 
     }}
   />
   <div 
@@ -287,7 +287,9 @@ function Home() {
         display: "flex", 
         flexDirection: "column", 
         gap: "2rem",
-        alignItems: "center", // Para centralizar os containers
+        alignItems: "center", 
+
+        
       }}
     >
       
@@ -297,6 +299,7 @@ function Home() {
           justifyContent: "center", // Para garantir que os containers fiquem centralizados
           gap: "2rem",  // Espaço entre os containers
           flexWrap: "wrap", 
+          
            // Para garantir que os botões se ajustem bem em telas menores
         }}
       >
@@ -308,7 +311,8 @@ function Home() {
             border: "2px solid #006c91",
             borderRadius: "8px",
             boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)", 
-            background: "#e0f7ff",
+            opacity: 1, 
+            backgroundColor: "#e0f7ff",// Propriedade específica para cor de fundo.
             display: "flex", 
             flexDirection: "column", 
             alignItems: "center", 
@@ -419,7 +423,7 @@ function Home() {
           </p>
           <Button 
             text="Transferir Tokens" 
-            path="/tranferir" 
+            path="/transferir" 
           />
         </div>
       </div>
@@ -547,7 +551,7 @@ function Home() {
       margin: "0 auto",
       color: "black", // Cor do texto para preto
     }}>
-      O POLIMILHAS é um projeto feito por membros do Grupo de Estudos de Blockchain da Escola Politécnica da USP, Polichain. 
+      O POLIMILHAS é um projeto feito por Dan Kiyochi, Gustavo Amaral e Henrique Mantovan, membros do Grupo de Estudos de Blockchain da Escola Politécnica da USP, o Polichain. 
     </p>
   </div>
 
@@ -559,8 +563,8 @@ function Home() {
       left: 0,
       right: 0,
       bottom: 0,
-      background: `url(${arquivoIcon}) no-repeat center center`, 
-      backgroundSize: "60%", 
+      background: `url(${fundo}) no-repeat center center`, 
+      backgroundSize: "cover", 
       opacity: 0.2, 
       backdropFilter: "blur(8px)", 
       zIndex: 1, 
@@ -630,7 +634,7 @@ function LandingPage() {
           backgroundImage: `url(${arquivoIcon})`,
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          backgroundSize: "contain",
+          backgroundSize: "80%",
           width: "50%",
           height: "100%",
         }}
@@ -647,7 +651,7 @@ function App() {
         <Route path="/Home" element={<Home />} />
         <Route path="/criacao" element={<Criacao/>} />
         <Route path="/resgate" element={<Resgate />} />
-        <Route path="/transferir" element={<Tranferir />} />
+        <Route path="/transferir" element={<Transferir />} />
       </Routes>
     </div>
   );
