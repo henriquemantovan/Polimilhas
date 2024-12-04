@@ -82,3 +82,56 @@ a:hover:after{
   justify-content: center !important;
   align-items: center !important;
 }
+
+
+/* Add these to your existing index.css */
+body {
+  margin: 0;
+  padding: 0;
+  background: #42455a;
+  font-family: 'Asap', sans-serif;
+  scroll-behavior: smooth;
+}
+
+section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e0ffff;
+}
+
+.container {
+  margin: 100px;
+}
+
+.text-container {
+  display: flex;
+}
+
+.text-box {
+  margin: 20px;
+  padding: 20px;
+  background: #00c2cb;
+}
+
+.reveal {
+  position: relative;
+  transform: translateY(150px);
+  opacity: 0;
+  transition: 2s all ease;
+}
+
+.reveal.active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .text-container {
+    flex-direction: column;
+  }
+}
+
+/* Optional: Import Asap font */
+@import url("https://fonts.googleapis.com/css2?family=Asap&display=swap");
