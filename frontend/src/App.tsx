@@ -162,7 +162,7 @@ function Home() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "90vh", // Garante que ocupe toda a altura da tela
+        minHeight: "90vh", //Garante que ocupe toda a altura da tela
         backgroundColor: "#F0F8FF",
         fontFamily: "'Fontes Serif', sans-serif",
         padding: "1rem", // Adiciona espaçamento interno
