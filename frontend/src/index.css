@@ -15,7 +15,70 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    background-color: #f8f8f8;
+    background-color: #F0F8FF  ;
     color: #181818;
   }
+}
+
+.wrapper{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+a{
+  display: block;
+  width: 200px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 18px;
+  font-family: sans-serif;
+  text-decoration: none;
+  color: #333;
+  border: 2px solid #333;
+  letter-spacing: 2px;
+  text-align: center;
+  position: relative;
+  transition: all .35s;
+}
+
+a span{
+  position: relative;
+  z-index: 2;
+}
+
+a:after{
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: #4180ab;
+  transition: all .45s;
+}
+
+a:hover{
+  color: #fff;
+}
+
+a:hover:after{
+  width: 100%;
+}
+
+.custom-connect-button button {
+  font-size: clamp(1rem, 3vw, 3.5rem) !important;
+  padding: 3rem 3rem !important;
+  border-radius: 80px !important;
+  background-color: #4180ab !important;
+  color: #fff !important;
+  border: none !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+
+  /* Centralizar o texto horizontal e verticalmente */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }
