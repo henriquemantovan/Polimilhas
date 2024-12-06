@@ -5,9 +5,11 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import arquivoIcon from "../images/aviao.png";
 import fundo from "../images/fundo.png"
+import Carousel from "./componentes/Carousel";
+
 
 import Header from "./Header";
-import Criacao from "./criacao/Criacao";
+import Compra from "./compra/Compra";
 import Resgate from "./resgate/Resgate";
 import Transferir from "./transferir/Transferir";
 
@@ -17,7 +19,7 @@ function NavigationBar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'funcionalidades', 'objetivo', 'sobre-nos'];
+      const sections = ['home', 'funcionalidades', 'gastar', 'produtos'];
       const scrollPosition = window.scrollY;
 
       sections.forEach(section => {
@@ -168,8 +170,8 @@ function Home() {
       alignItems: "center",
       minHeight: "70vh",
       fontFamily: "'Asap', sans-serif",
-      padding: "2rem", // Increased padding
-      zIndex: 2, // Ensure the content is above the background
+      padding: "2rem", 
+      zIndex: 2, 
     }}
   >
     <h1
@@ -204,19 +206,19 @@ function Home() {
       }}
     >
       <Button 
-        text="Funcionalidades" 
+        text="Administrar tokens" 
         path="/funcionalidades"
         sectionId="funcionalidades" 
       />
       <Button 
-        text="Objetivo" 
-        path='/objetivo'
-        sectionId="objetivo" 
+        text="Resgate cupons" 
+        path='/gastar'
+        sectionId="gastar" 
       />
       <Button 
         text="Sobre nós" 
-        path="/sobre-nos"
-        sectionId="sobre-nos" 
+        path="/produtos"
+        sectionId="produtos" 
       />
     </div>
   </div>
@@ -328,7 +330,7 @@ function Home() {
               color: "#006c91", 
             }}
           >
-            Criar Tokens
+            Comprar Tokens
           </p>
           <p 
             style={{ 
@@ -337,13 +339,13 @@ function Home() {
               marginBottom: "1rem",
             }}
           >
-            Crie novos tokens para utilizar em nossa plataforma. Simples e rápido!
+            Compre tokens para completar o que falta para resgatar produtos. Simples e rápido!
           </p>
           <Button 
-            text="Criar Tokens" 
-            path="/criacao" 
+            text="Comprar Tokens" 
+            path="/compra" 
           />
-        </div>
+        </div> 
         
         <div 
           style={{ 
@@ -432,90 +434,19 @@ function Home() {
   </div>
 </section>
 
-<section id="objetivo" className="reveal" style={{ 
-  padding: "4rem 2rem", // Padding vertical
-}}>
-  <div className="container" style={{ 
-    maxWidth: "900px", // Ajustado para largura menor
-    margin: "0 auto", // Centralizar o container
-    
-  }}>
-    <h2 style={{ 
-      fontSize: "3rem", // Título maior
-      marginBottom: "0.8rem", 
-      textAlign: "center",
-      color: '#fff'
-    }}>
-      Objetivo 
-    </h2>
-    <div className="text-container" style={{ 
-      display: "flex", 
-      flexWrap: "wrap", 
-      justifyContent: "center", 
-    }}>
-      <div className="text-box" style={{ 
-        flex: "1 1 250px", 
-        background: "rgba(255,255,255,0.1)", 
-        padding: "1.5rem", 
-        borderRadius: "12px",
-        minHeight: "200px" // Altura menor do container
-      }}>
-        <h3 style={{ 
-          fontSize: "1.5rem", 
-          marginBottom: "1rem",
-          color: "white" 
-        }}>
-          O que são Tokens?
-        </h3>
-        <p>
-          Tokens são unidades digitais que representam valores de créditos. Esses tokens podem ser usados para realizar transações, como resgatar milhas ou transferir créditos entre usuários, de forma segura e ágil.
-        </p>
-      </div>
-
-      <div className="text-box" style={{ 
-        flex: "1 1 250px", 
-        background: "rgba(255,255,255,0.1)", 
-        padding: "1.5rem", 
-        borderRadius: "12px",
-        minHeight: "200px" // Altura menor do container
-      }}>
-        <h3 style={{ 
-          fontSize: "1.5rem", 
-          marginBottom: "1rem",
-          color: "white" 
-        }}>
-          Objetivo
-        </h3>
-        <p>
-          O objetivo principal deste site é fornecer uma solução simples e segura para a conversão de milhas em tokens digitais, possibilitando que os usuários realizem operações como resgatar ou transferir esses tokens com rapidez e eficiência.
-        </p>
-      </div>
-
-      <div className="text-box" style={{ 
-        flex: "1 1 250px", 
-        background: "rgba(255,255,255,0.1)", 
-        padding: "1.5rem", 
-        borderRadius: "12px",
-        minHeight: "200px" // Altura menor do container
-      }}>
-        <h3 style={{ 
-          fontSize: "1.5rem", 
-          marginBottom: "1rem",
-          color: "white" 
-        }}>
-          Benefícios
-        </h3>
-        <p>
-          Com o sistema de tokens, os usuários poderão resgatar suas milhas de maneira mais prática e segura. Além disso, será possível transferir tokens para outras pessoas instantaneamente, proporcionando maior flexibilidade na gestão dos créditos.
-        </p>
-      </div>
-    </div>
-  </div>
+<section
+  id="gastar"
+  className="reveal"
+  style={{padding: "4rem 2rem", 
+  }}
+>
+  <Carousel />
 </section>
 
 
 
-<section id="sobre-nos" className="reveal" style={{ 
+
+<section id="produtos" className="reveal" style={{ 
    background: 'linear-gradient(to bottom right, #e0f7ff, #e0f7ff)', 
   color: '#42455a',
   display: "flex",
@@ -526,35 +457,135 @@ function Home() {
   textAlign: "center", 
   position: "relative",
 }}>
-  <div 
-    className="container" 
-    style={{ 
-      maxWidth: "1200px",
-      margin: "0 auto",
-      textAlign: "center",
-      position: "relative", 
-      zIndex: 2, 
-      marginTop: "-8rem", // Move o conteúdo um pouco para cima
-    }}
-  >
+  <div style={{ 
+    maxWidth: "900px", 
+    margin: "0 auto", 
+    backgroundColor: "#fff", // Fundo branco
+    padding: "2rem 1.5rem", 
+    borderRadius: "16px", 
+    boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)", // Sombra mais pronunciada
+    fontFamily: "'Roboto', sans-serif" // Fonte moderna
+}}>
     <h2 style={{ 
-      fontSize: "4rem", 
-      marginBottom: "1rem", // Ajusta o espaçamento do título
-      color: "black", // Cor do título para preto
+        fontSize: "3rem", 
+        marginBottom: "1.5rem", 
+        textAlign: "center", 
+        color: "#2c3e50", // Azul escuro elegante
+        fontWeight: "bold",
+        letterSpacing: "1px" // Suave espaçamento entre letras
     }}>
-      Sobre nós
+        Objetivo 
     </h2>
-    
-    <p style={{ 
-      fontSize: "1.5rem", 
-      lineHeight: "1.5", 
-      maxWidth: "900px", 
-      margin: "0 auto",
-      color: "black", // Cor do texto para preto
+    <div style={{ 
+        display: "flex", 
+        flexWrap: "wrap", 
+        gap: "1.5rem", // Espaçamento entre as caixas
+        justifyContent: "center", 
     }}>
-      O POLIMILHAS é um projeto feito por Dan Kiyochi, Gustavo Amaral e Henrique Mantovan, membros do Grupo de Estudos de Blockchain da Escola Politécnica da USP, o Polichain. 
-    </p>
-  </div>
+        <div style={{ 
+            flex: "1 1 calc(33.33% - 1rem)", 
+            background: "linear-gradient(135deg, #ecf0f1, #dfe6e9)", 
+            padding: "1.5rem", 
+            borderRadius: "16px", 
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)", 
+            transition: "transform 0.3s, box-shadow 0.3s", 
+            cursor: "pointer",
+        }}
+        onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.15)";
+        }}
+        onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.1)";
+        }}>
+            <h3 style={{ 
+                fontSize: "1.8rem", 
+                marginBottom: "1rem", 
+                color: "#34495e", // Azul escuro suave
+                fontWeight: "600",
+            }}>
+                O que são Tokens?
+            </h3>
+            <p style={{ 
+                fontSize: "1rem", 
+                color: "#636e72", // Cinza médio para contraste suave
+                lineHeight: "1.6"
+            }}>
+                Tokens são unidades digitais que representam valores de créditos. Esses tokens podem ser usados para realizar transações, como resgatar milhas ou transferir créditos entre usuários, de forma segura e ágil.
+            </p>
+        </div>
+
+        <div style={{ 
+            flex: "1 1 calc(33.33% - 1rem)", 
+            background: "linear-gradient(135deg, #ecf0f1, #dfe6e9)", 
+            padding: "1.5rem", 
+            borderRadius: "16px", 
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)", 
+            transition: "transform 0.3s, box-shadow 0.3s", 
+            cursor: "pointer",
+        }}
+        onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.15)";
+        }}
+        onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.1)";
+        }}>
+            <h3 style={{ 
+                fontSize: "1.8rem", 
+                marginBottom: "1rem", 
+                color: "#34495e", 
+                fontWeight: "600",
+            }}>
+                Propósito
+            </h3>
+            <p style={{ 
+                fontSize: "1rem", 
+                color: "#636e72", 
+                lineHeight: "1.6"
+            }}>
+                O objetivo principal deste site é fornecer uma solução simples e segura para a conversão de milhas em tokens digitais, possibilitando que os usuários realizem operações como resgatar ou transferir esses tokens com rapidez e eficiência.
+            </p>
+        </div>
+
+        <div style={{ 
+            flex: "1 1 calc(33.33% - 1rem)", 
+            background: "linear-gradient(135deg, #ecf0f1, #dfe6e9)", 
+            padding: "1.5rem", 
+            borderRadius: "16px", 
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)", 
+            transition: "transform 0.3s, box-shadow 0.3s", 
+            cursor: "pointer",
+        }}
+        onMouseEnter={(e) => {
+            e.currentTarget.style.transform = "scale(1.05)";
+            e.currentTarget.style.boxShadow = "0 8px 20px rgba(0, 0, 0, 0.15)";
+        }}
+        onMouseLeave={(e) => {
+            e.currentTarget.style.transform = "scale(1)";
+            e.currentTarget.style.boxShadow = "0 4px 10px rgba(0, 0, 0, 0.1)";
+        }}>
+            <h3 style={{ 
+                fontSize: "1.8rem", 
+                marginBottom: "1rem", 
+                color: "#34495e", 
+                fontWeight: "600",
+            }}>
+                Benefícios
+            </h3>
+            <p style={{ 
+                fontSize: "1rem", 
+                color: "#636e72", 
+                lineHeight: "1.6"
+            }}>
+                Com o sistema de tokens, os usuários poderão resgatar suas milhas de maneira mais prática e segura. Além disso, será possível transferir tokens para outras pessoas instantaneamente, proporcionando maior flexibilidade na gestão dos créditos.
+            </p>
+        </div>
+    </div>
+</div>
+
 
   <div 
     style={{
@@ -567,12 +598,10 @@ function Home() {
       backgroundSize: "cover", 
       opacity: 0.2, 
       backdropFilter: "blur(8px)", 
-      zIndex: 1, 
+      zIndex: -1, 
     }}
   />
 </section>
-
-
     </div>
   );
 }
@@ -649,7 +678,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/Home" element={<Home />} />
-        <Route path="/criacao" element={<Criacao/>} />
+        <Route path="/compra" element={<Compra/>} />
         <Route path="/resgate" element={<Resgate />} />
         <Route path="/transferir" element={<Transferir />} />
       </Routes>
