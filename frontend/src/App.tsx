@@ -69,7 +69,6 @@ function Home() {
   }, []);
 
   const handleNavigation = (path: string, sectionId?: string) => {
-    // If on the Home page and a section ID is provided, scroll to that section
     if (window.location.pathname === '/Home' && sectionId) {
       const section = document.getElementById(sectionId);
       if (section) {
@@ -298,11 +297,10 @@ function Home() {
       <div 
         style={{ 
           display: "flex", 
-          justifyContent: "center", // Para garantir que os containers fiquem centralizados
-          gap: "2rem",  // Espaço entre os containers
+          justifyContent: "center", 
+          gap: "2rem", 
           flexWrap: "wrap", 
           
-           // Para garantir que os botões se ajustem bem em telas menores
         }}
       >
         <div 
@@ -318,7 +316,7 @@ function Home() {
             display: "flex", 
             flexDirection: "column", 
             alignItems: "center", 
-            justifyContent: "center", // Centraliza o conteúdo verticalmente
+            justifyContent: "center",
             height: "250px", 
           }}
         >
@@ -440,11 +438,31 @@ function Home() {
   style={{padding: "4rem 2rem", 
   }}
 >
+  <h2 style={{ 
+      fontSize: "2rem", 
+      marginBottom: "1.5rem", 
+      textAlign: "center", 
+      color: "#e0ffff",
+      fontWeight: "bold",
+      letterSpacing: "1px" 
+    }}> Use suas milhas para conseguir descontos em passagens!
+  </h2>
   <Carousel />
+  <div
+    style={{
+      position: "absolute",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundImage: `url(${arquivoIcon})`,
+      backgroundRepeat: "repeat", // Repete a imagem em todo o fundo
+      backgroundSize: "21%", // Define o tamanho da imagem
+      opacity: 0.05,
+      zIndex: -1,
+    }}
+  />
 </section>
-
-
-
 
 <section id="produtos" className="reveal" style={{ 
    background: 'linear-gradient(to bottom right, #e0f7ff, #e0f7ff)', 
@@ -464,22 +482,22 @@ function Home() {
     padding: "2rem 1.5rem", 
     borderRadius: "16px", 
     boxShadow: "0 8px 20px rgba(0, 0, 0, 0.1)", // Sombra mais pronunciada
-    fontFamily: "'Roboto', sans-serif" // Fonte moderna
+    fontFamily: "'Roboto', sans-serif" 
 }}>
     <h2 style={{ 
         fontSize: "3rem", 
         marginBottom: "1.5rem", 
         textAlign: "center", 
-        color: "#2c3e50", // Azul escuro elegante
+        color: "#2c3e50", 
         fontWeight: "bold",
-        letterSpacing: "1px" // Suave espaçamento entre letras
+        letterSpacing: "1px" 
     }}>
         Objetivo 
     </h2>
     <div style={{ 
         display: "flex", 
         flexWrap: "wrap", 
-        gap: "1.5rem", // Espaçamento entre as caixas
+        gap: "1.5rem", 
         justifyContent: "center", 
     }}>
         <div style={{ 
@@ -502,14 +520,14 @@ function Home() {
             <h3 style={{ 
                 fontSize: "1.8rem", 
                 marginBottom: "1rem", 
-                color: "#34495e", // Azul escuro suave
+                color: "#34495e", 
                 fontWeight: "600",
             }}>
                 O que são Tokens?
             </h3>
             <p style={{ 
                 fontSize: "1rem", 
-                color: "#636e72", // Cinza médio para contraste suave
+                color: "#636e72", 
                 lineHeight: "1.6"
             }}>
                 Tokens são unidades digitais que representam valores de créditos. Esses tokens podem ser usados para realizar transações, como resgatar milhas ou transferir créditos entre usuários, de forma segura e ágil.
