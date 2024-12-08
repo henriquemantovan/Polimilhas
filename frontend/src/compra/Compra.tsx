@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "../Header";
+import { useNavigate } from "react-router-dom";
 
 
 const OpcaoButton = ({
@@ -121,12 +122,15 @@ const CompraBotao = ({ onClick }: { onClick: () => void }) => (
     </style>
   </a>
 );
-const handleVoltarHome = () => {
-  window.location.href = "/Home";
-};
+
 
 const Compra: React.FC = () => {
   const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null);
+  const navigate = useNavigate();
+
+  const handleVoltarHome = () => {
+    navigate("/home");
+  };
 
   const opcoes = [
     { quantidade: 50, preco: "5 XRP" },

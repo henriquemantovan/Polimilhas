@@ -1,13 +1,16 @@
 import React from "react";
 import Header from "../Header";
+import { useNavigate } from "react-router-dom";
 
 
-const handleVoltarHome = () => {
-  window.location.href = "/Home";
-};
 const Resgate: React.FC = () => {
   const handleResgate = () => {
     alert("Funciona");
+  };
+  const navigate = useNavigate();
+
+  const handleVoltarHome = () => {
+    navigate("/home");
   };
 
   return (
