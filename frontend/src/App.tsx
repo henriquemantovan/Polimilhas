@@ -457,7 +457,7 @@ function Home() {
       bottom: 0,
       backgroundImage: `url(${arquivoIcon})`,
       backgroundRepeat: "repeat", // Repete a imagem em todo o fundo
-      backgroundSize: "21%", // Define o tamanho da imagem
+      backgroundSize: "21%", 
       opacity: 0.05,
       zIndex: -1,
     }}
@@ -614,7 +614,7 @@ function Home() {
       bottom: 0,
       background: `url(${fundo}) no-repeat center center`, 
       backgroundSize: "cover", 
-      opacity: 0.2, 
+      opacity: 0.8, 
       backdropFilter: "blur(8px)", 
       zIndex: -1, 
     }}
@@ -639,56 +639,61 @@ function LandingPage() {
     <div
       style={{
         display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
         height: "100vh",
         fontFamily: "'Fontes Serif', sans-serif",
         backgroundColor: "#F0F8FF",
-        flexDirection: "row",
+        textAlign: "center",
+        position: "relative",
       }}
     >
+      
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100%",
-          width: "50%",
-          padding: "2rem",
-          boxSizing: "border-box",
-          zIndex: 2,
+          width: "600px", 
+          height: "600px", 
+          position: "relative", // Necessário para centralizar o título dentro deste contêiner
         }}
       >
+        <div
+          style={{
+            width: "100%",
+            height: "100%",
+            backgroundImage: `url(${arquivoIcon})`,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            opacity: 0.4, 
+          }}
+        />
         <h1
           style={{
-            fontSize: "clamp(2rem, 6vw, 6rem)",
+            position: "absolute", 
+            top: "40%", 
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            fontSize: "clamp(3rem, 8vw, 8rem)",
             fontWeight: "bold",
             color: "black",
-            marginBottom: "2rem",
+            textShadow: "2px 2px 10px rgba(255, 255, 255, 0.8)", 
             textAlign: "center",
           }}
         >
           POLIMILHAS
         </h1>
-
-        <div className="custom-connect-button" style={{ textAlign: "center" }}>
-          <ConnectButton />
-        </div>
       </div>
 
-      <div
-        style={{
-          flex: 1,
-          backgroundImage: `url(${arquivoIcon})`,
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "80%",
-          width: "50%",
-          height: "100%",
-        }}
-      />
+      <div className="custom-connect-button" style={{ marginTop: "-4rem" }}>
+        <ConnectButton />
+      </div>
     </div>
   );
 }
+
+
+
 
 function App() {
   return (
