@@ -1,13 +1,11 @@
 .carousel-container {
-  
-  height: 600px;
-  margin: 0;
-  display: grid;
-  grid-template-rows: 500px 100px;
-  grid-template-columns: 1fr 30px 30px 30px 30px 30px 1fr;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
+  height: 100%; /* Certifique-se de ajustar conforme necessário */
 }
+
 
 /*carousel ta no index.css*/
 
@@ -59,4 +57,26 @@
 .item-button:active {
   transform: translateY(0);
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+/* Dots Container */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Individual Dot */
+.dot {
+  width: 12px;
+  height: 12px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: #01455b;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }

@@ -5,88 +5,58 @@ import R500 from "../../images/R500-removebg-preview.png";
 import R1000 from "../../images/R1000-removebg-preview.png";
 import R1500 from "../../images/R1500-removebg-preview.png";
 
-import "./Carousel.css"; 
+import "./Carousel.css";
 
 const Carousel: React.FC = () => {
   const [position, setPosition] = useState<number>(1);
 
-  const handleRadioChange = (newPosition: number): void => {
-    setPosition(newPosition);
+  const items = [
+    { image: R100, tokens: "1000 Tokens" },
+    { image: R300, tokens: "2800 Tokens" },
+    { image: R500, tokens: "4500 Tokens" },
+    { image: R1000, tokens: "8500 Tokens" },
+    { image: R1500, tokens: "12500 Tokens" },
+  ];
+
+  const handleItemClick = (index: number): void => {
+    setPosition(index + 1);
   };
 
+  
   return (
     <div className="carousel-container">
-      <input
-        type="radio"
-        name="position"
-        checked={position === 1}
-        onChange={() => handleRadioChange(1)}
-      />
-      <input
-        type="radio"
-        name="position"
-        checked={position === 2}
-        onChange={() => handleRadioChange(2)}
-      />
-      <input
-        type="radio"
-        name="position"
-        checked={position === 3}
-        onChange={() => handleRadioChange(3)}
-      />
-      <input
-        type="radio"
-        name="position"
-        checked={position === 4}
-        onChange={() => handleRadioChange(4)}
-      />
-      <input
-        type="radio"
-        name="position"
-        checked={position === 5}
-        onChange={() => handleRadioChange(5)}
-      />
-
-      <main id="carousel" style={{ "--position": position } as React.CSSProperties}>
-        <div className="item">
-          <img src={R100} alt="Item" />
-          <p className="item-text">1000 Tokens</p>
-          <button className="item-button">
-            Resgate seu cupom
-          </button>
-        </div>
-        <div className="item">
-          <img src={R300} alt="Item" />
-          <p className="item-text">2800 Tokens</p>
-          <button className="item-button">
-            Resgate seu cupom
-          </button>
-        </div>
-        
-        <div className="item">
-          <img src={R500} alt="Item" />
-          <p className="item-text">4500 Tokens</p>
-          <button className="item-button">
-            Resgate seu cupom
-          </button>
-        </div>
-        <div className="item">
-          <img src={R1000} alt="Item" />
-          <p className="item-text">8500 Tokens</p>
-          <button className="item-button">
-            Resgate seu cupom
-          </button>
-        </div>
-        <div className="item">
-          <img src={R1500} alt="Item" />
-          <p className="item-text">12500 Tokens</p>
-          <button className="item-button">
-            Resgate seu cupom
-          </button>
-        </div>
+      <main
+        id="carousel"
+        style={{ "--position": position } as React.CSSProperties}
+      >
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className={`item ${position === index + 1 ? "active" : ""}`}
+            onClick={() => handleItemClick(index)}
+          
+          >
+            <img src={item.image} alt={`Item ${index + 1}`} />
+            <p className="item-text">{item.tokens}</p>
+            <button className="item-button"
+                    onClick={() => alert("oi")}
+            >Resgate seu cupom
+            </button>
+          </div>
+        ))}
       </main>
+      <div className="dots">
+        {items.map((_, index) => (
+          <div
+            key={index}
+            className={`dot ${position === index + 1 ? "active" : ""}`}
+            onClick={() => handleItemClick(index)}
+          />
+        ))}
+      </div>
     </div>
   );
+  
 };
 
 export default Carousel;
