@@ -1,17 +1,12 @@
 import React, { useState } from "react";
 import Header from "../Header";
 import arquivoIcon from "../../images/aviao.png";
-import { useNavigate } from "react-router-dom";
 
 
 const TransferirTokens: React.FC = () => {
   const [endereco, setEndereco] = useState("");
   const [quantidade, setQuantidade] = useState("");
-  const navigate = useNavigate();
 
-  const handleVoltarHome = () => {
-    navigate("/home");
-  };
 
   const handleTransferencia = () => {
     alert(
@@ -163,36 +158,7 @@ const TransferirTokens: React.FC = () => {
       >
         Transferir
       </div>
-      <div
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          left: "20px",
-          width: "40px",
-          height: "40px",
-          borderRadius: "50%",
-          backgroundColor: "#2a738c",
-          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          color: "#fff",
-          fontWeight: "bold",
-          fontSize: "0.8rem",
-          cursor: "pointer",
-          transition: "transform 0.2s ease",
-          zIndex: 3,
-        }}
-        onClick={handleVoltarHome}
-        onMouseOver={(e) => {
-          e.currentTarget.style.transform = "scale(1.2)";
-        }}
-        onMouseOut={(e) => {
-          e.currentTarget.style.transform = "scale(1)";
-        }}
-      >
-        ←
-      </div>
+
       <div
     style={{
       position: "absolute",
