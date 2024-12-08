@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import Header from "../Header";
 import arquivoIcon from "../../images/aviao.png";
+import { useNavigate } from "react-router-dom";
 
 
-
-const handleVoltarHome = () => {
-  window.location.href = "/Home";
-};
-
-  const TransferirTokens: React.FC = () => {
+const TransferirTokens: React.FC = () => {
   const [endereco, setEndereco] = useState("");
   const [quantidade, setQuantidade] = useState("");
+  const navigate = useNavigate();
+
+  const handleVoltarHome = () => {
+    navigate("/home");
+  };
 
   const handleTransferencia = () => {
     alert(
