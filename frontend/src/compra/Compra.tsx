@@ -1,180 +1,248 @@
-
 import React, { useState } from "react";
 import Header from "../Header";
 
-const Criacao: React.FC = () => {
-  const [formData, setFormData] = useState({
-    tokenName: "",
-    symbol: "",
-    supply: "",
-  });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+const OpcaoButton = ({
+  text,
+  onClick,
+  selected,
+  price,
+}: {
+  text: string;
+  onClick: () => void;
+  selected: boolean;
+  price: string;
+}) => (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "clamp(100px, 15vw, 140px)", 
+      height: "clamp(50px, 10vh, 70px)",
+      fontSize: "clamp(0.9rem, 1vw, 1.2rem)", 
+      fontWeight: "bold",
+      color: selected ? "#fff" : "#333",
+      backgroundColor: selected ? "#2a738c" : "#e0e0e0",
+      borderRadius: "8px",
+      boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+      cursor: "pointer",
+      margin: "0.5rem",
+      transition: "transform 0.2s ease, background-color 0.2s ease",
+      textAlign: "center",
+      padding: "0.5rem",
+    }}
+    onClick={onClick}
+    onMouseOver={(e) => {
+      e.currentTarget.style.transform = "scale(1.1)";
+    }}
+    onMouseOut={(e) => {
+      e.currentTarget.style.transform = "scale(1)";
+    }}
+  >
+    <div
+      style={{
+        fontSize: "clamp(1rem, 2vw, 1.3rem)", 
+        marginBottom: "0.3rem",
+      }}
+    >
+      {text}
+    </div>
+    <div
+      style={{
+        fontSize: "clamp(0.8rem, 1.5vw, 1rem)", 
+      }}
+    >
+      {price}
+    </div>
+  </div>
+);
+
+const CompraBotao = ({ onClick }: { onClick: () => void }) => (
+  <a
+    style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "clamp(200px, 30vw, 400px)", 
+      height: "clamp(70px, 12vh, 100px)", 
+      fontSize: "clamp(1rem, 2vw, 1.5rem)", 
+      fontWeight: "bold",
+      textDecoration: "none",
+      color: "#2a738c",
+      backgroundColor: "#fff",
+      borderColor: "#2a738c",
+      borderRadius: "12px",
+      boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+      overflow: "hidden",
+      position: "relative",
+      transition: "transform 0.3s ease, box-shadow 0.3s ease",
+      cursor: "pointer",
+      marginBottom: "1rem",
+    }}
+    onClick={onClick}
+  >
+    <span
+      style={{
+        zIndex: "2",
+        position: "relative",
+      }}
+    >
+      Comprar
+    </span>
+    <div
+      style={{
+        position: "absolute",
+        top: "0",
+        left: "0",
+        width: "100%",
+        height: "100%",
+        background: "#2a738c",
+        transform: "translateY(100%)",
+        transition: "transform 0.3s ease",
+        zIndex: "1",
+      }}
+      className="hoverEffect"
+    ></div>
+    <style>
+      {`
+        a:hover {
+          transform: scale(1.1);
+          box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
+        }
+        a:hover .hoverEffect {
+          transform: translateY(0);
+        }
+        a:hover span {
+          color: #333;
+        }
+      `}
+    </style>
+  </a>
+);
+const handleVoltarHome = () => {
+  window.location.href = "/Home";
+};
+
+const Compra: React.FC = () => {
+  const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null);
+
+  const opcoes = [
+    { quantidade: 50, preco: "5 XRP" },
+    { quantidade: 100, preco: "9 XRP" },
+    { quantidade: 200, preco: "17 XRP" },
+    { quantidade: 400, preco: "33 XRP" },
+    { quantidade: 800, preco: "65 XRP" },
+    { quantidade: 1500, preco: "120 XRP" },
+    { quantidade: 3000, preco: "230 XRP" },
+    { quantidade: 5000, preco: "370 XRP" },
+  ];
+
+  const handleSelectQuantity = (quantidade: number) => {
+    setSelectedQuantity(quantidade);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Token criado com os dados:", formData);
-    alert("Token criado com sucesso!");
-    setFormData({
-      tokenName: "",
-      symbol: "",
-      supply: "",
-    });
+  const handleCompra = () => {
+    if (selectedQuantity) {
+      alert(`Compra realizada: ${selectedQuantity} tokens!`);
+      setSelectedQuantity(null);
+    } else {
+      alert("Compra não realizada.");
+    }
   };
 
   return (
     <div
       style={{
-        background: "linear-gradient(to bottom right, #e0f7ff, #ffffff)",
-        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
         justifyContent: "center",
-        padding: "2rem",
+        alignItems: "center",
+        minHeight: "100vh",
+        background: "#161c2d",
+        color: "#fff",
         fontFamily: "'Asap', sans-serif",
+        padding: "0.5rem",
       }}
-    >    <Header />
-
-      <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem", color: "#006c91" }}>
-        Criar Token
-      </h1>
-      <p style={{ fontSize: "1rem", marginBottom: "2rem", color: "#42455a" }}>
-        Preencha os detalhes abaixo para criar um novo token.
-      </p>
-      <form
-        onSubmit={handleSubmit}
+    >
+      <Header />
+      
+      <h1
         style={{
-          background: "#ffffff",
-          padding: "2rem",
-          borderRadius: "12px",
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
-          width: "100%",
-          maxWidth: "500px",
+          fontSize: "clamp(2rem, 4vw, 3rem)", 
+          marginBottom: "1rem",
+          color: "#2a738c",
         }}
       >
-        <div style={{ marginBottom: "1.5rem" }}>
-          <label
-            htmlFor="tokenName"
-            style={{
-              display: "block",
-              marginBottom: "0.5rem",
-              fontSize: "1rem",
-              color: "#006c91",
-            }}
-          >
-            Nome do Token
-          </label>
-          <input
-            type="text"
-            id="tokenName"
-            name="tokenName"
-            value={formData.tokenName}
-            onChange={handleInputChange}
-            required
-            style={{
-              width: "100%",
-              padding: "0.8rem",
-              fontSize: "1rem",
-              borderRadius: "8px",
-              border: "1px solid #ddd",
-              outline: "none",
-            }}
-          />
-        </div>
+        Compra de Tokens
+      </h1>
 
-        <div style={{ marginBottom: "1.5rem" }}>
-          <label
-            htmlFor="symbol"
-            style={{
-              display: "block",
-              marginBottom: "0.5rem",
-              fontSize: "1rem",
-              color: "#006c91",
-            }}
-          >
-            Símbolo
-          </label>
-          <input
-            type="text"
-            id="symbol"
-            name="symbol"
-            value={formData.symbol}
-            onChange={handleInputChange}
-            required
-            style={{
-              width: "100%",
-              padding: "0.8rem",
-              fontSize: "1rem",
-              borderRadius: "8px",
-              border: "1px solid #ddd",
-              outline: "none",
-            }}
-          />
-        </div>
+      <p
+        style={{
+          marginBottom: "1.7rem",
+          fontSize: "clamp(1rem, 2vw, 1.2rem)", 
+          color: "#ccc",
+          textAlign: "center",
+        }}
+      >
+        Selecione a quantidade desejada e clique no botão para concluir a compra.
+      </p>
 
-        <div style={{ marginBottom: "2rem" }}>
-          <label
-            htmlFor="supply"
-            style={{
-              display: "block",
-              marginBottom: "0.5rem",
-              fontSize: "1rem",
-              color: "#006c91",
-            }}
-          >
-            Suprimento Inicial
-          </label>
-          <input
-            type="number"
-            id="supply"
-            name="supply"
-            value={formData.supply}
-            onChange={handleInputChange}
-            required
-            style={{
-              width: "100%",
-              padding: "0.8rem",
-              fontSize: "1rem",
-              borderRadius: "8px",
-              border: "1px solid #ddd",
-              outline: "none",
-            }}
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "1rem",
+          justifyItems: "center",
+          marginBottom: "2rem",
+          width: "100%",
+          maxWidth: "700px",
+        }}
+      >
+        {opcoes.map((opcao) => (
+          <OpcaoButton
+            key={opcao.quantidade}
+            text={`${opcao.quantidade} Tokens`}
+            price={opcao.preco}
+            selected={selectedQuantity === opcao.quantidade}
+            onClick={() => handleSelectQuantity(opcao.quantidade)}
           />
-        </div>
+        ))}
+      </div>
 
-        <button
-          type="submit"
-          style={{
-            width: "100%",
-            padding: "1rem",
-            fontSize: "1rem",
-            fontWeight: "bold",
-            color: "#ffffff",
-            backgroundColor: "#006c91",
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-            transition: "background-color 0.3s ease",
-          }}
-          onMouseOver={(e) =>
-            (e.currentTarget.style.backgroundColor = "#004f6e")
-          }
-          onMouseOut={(e) =>
-            (e.currentTarget.style.backgroundColor = "#006c91")
-          }
-        >
-          Criar Token
-        </button>
-      </form>
+      <CompraBotao onClick={handleCompra} />
+      <div
+        style={{
+          position: "absolute",
+          bottom: "20px",
+          left: "20px",
+          width: "40px",
+          height: "40px",
+          borderRadius: "50%",
+          backgroundColor: "#2a738c",
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.2)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          color: "#fff",
+          fontWeight: "bold",
+          fontSize: "0.8rem",
+          cursor: "pointer",
+          transition: "transform 0.2s ease",
+        }}
+        onClick={handleVoltarHome}
+        onMouseOver={(e) => {
+          e.currentTarget.style.transform = "scale(1.2)";
+        }}
+        onMouseOut={(e) => {
+          e.currentTarget.style.transform = "scale(1)";
+        }}
+      >
+        ←
+      </div>
     </div>
   );
 };
 
-export default Criacao;
+export default Compra;

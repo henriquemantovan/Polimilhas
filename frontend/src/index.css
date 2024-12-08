@@ -165,8 +165,8 @@ div.item {
   --r: calc(var(--position) - var(--offset));
   --abs: max(calc(var(--r) * -1), var(--r));
   transition: 
-    transform 0.8s cubic-bezier(0.3, 0.5, 0.5, 1), 
-    z-index 0.001s linear;
+    transform 0.5s cubic-bezier(0.3, 0.5, 0.5, 1), 
+    z-index 0.001s linear; 
   transform: rotateY(calc(-10deg * var(--r)))
     translateX(calc(-300px * var(--r)))
     scale(calc(1 - 0.1 * var(--abs)));
