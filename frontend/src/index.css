@@ -77,14 +77,22 @@ a:hover:after{
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
 
-  /* Centralizar o texto horizontal e verticalmente */
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;
 }
 
+.button-hover {
+  transition: all 0.3s ease, transform 0.2s ease;
+}
 
-/* Add these to your existing index.css */
+.button-hover:hover {
+  background-color: #2a738c !important;
+  transform: translateY(-3px);
+}
+
+
+
 body {
   margin: 0;
   padding: 0;
