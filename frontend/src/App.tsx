@@ -12,6 +12,8 @@ import Header from "./Header";
 import Compra from "./compra/Compra";
 import Resgate from "./resgate/Resgate";
 import Transferir from "./transferir/Transferir";
+import Admin from "./adm/Adm";
+
 
 function NavigationBar() {
   const [activeSection, setActiveSection] = useState('home');
@@ -649,12 +651,33 @@ function LandingPage() {
         position: "relative",
       }}
     >
-      
+      {/* Botão de navegação para Admin */}
+      <div className="custom-connect-button"
+        onClick={() => navigate("/admin")}
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          padding: "10px 20px",
+          backgroundColor: "#4180ab",
+          color: "white",
+          border: "none",
+          borderRadius: "80px",
+          cursor: "pointer",
+          fontSize: "clamp(1rem, 2vw, 1.5rem)",
+          transition: "transform 0.3s ease, box-shadow 0.3s ease",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.2)",
+
+        }}
+      >
+        Admin
+      </div>
+
       <div
         style={{
-          width: "600px", 
-          height: "600px", 
-          position: "relative", // Necessário para centralizar o título dentro deste contêiner
+          width: "600px",
+          height: "600px",
+          position: "relative",
         }}
       >
         <div
@@ -665,19 +688,19 @@ function LandingPage() {
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",
             backgroundSize: "contain",
-            opacity: 0.4, 
+            opacity: 0.4,
           }}
         />
         <h1
           style={{
-            position: "absolute", 
-            top: "40%", 
+            position: "absolute",
+            top: "40%",
             left: "50%",
             transform: "translate(-50%, -50%)",
             fontSize: "clamp(3rem, 8vw, 8rem)",
             fontWeight: "bold",
             color: "black",
-            textShadow: "2px 2px 10px rgba(255, 255, 255, 0.8)", 
+            textShadow: "2px 2px 10px rgba(255, 255, 255, 0.8)",
             textAlign: "center",
           }}
         >
@@ -695,6 +718,7 @@ function LandingPage() {
 
 
 
+
 function App() {
   return (
     <div>
@@ -704,6 +728,7 @@ function App() {
         <Route path="/compra" element={<Compra/>} />
         <Route path="/resgate" element={<Resgate />} />
         <Route path="/transferir" element={<Transferir />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </div>
   );
