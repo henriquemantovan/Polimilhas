@@ -19,16 +19,31 @@ contract PoliMilhas is ERC20("PoliMilhas", "PM"){
 
     }
     
+    function approveNFTContract(address nftContract) public {
+        approve(nftContract, type(uint256).max);
+    }
+
+
     function sendToContract(uint qnt) public{
         require(msg.sender.balance >= qnt, "Not enough Tokens");
         _transfer(address(msg.sender), address(this), qnt);
           emit TokensSentToContract(msg.sender, qnt);
     
     }
+
+
+
+    function senToAnotherUser(uint qnt, address vendor) public {
+        require(msg.sender.balance >= qnt, "Not enough Tokens");
+        _transfer(address(msg.sender), address(vendor), qnt);
+
+
+    }
+
     function sendTokens (address recipient, uint256 amount) public {
         require(msg.sender == owner, "Only the owner can send tokens from the contract");
-        require(balanceOf(address(msg.sender)) >= amount, "Contract does not have enough tokens");
-        _transfer(address(msg.sender), recipient, amount);
+        require(balanceOf(address(this)) >= amount, "Contract does not have enough tokens");
+        _transfer(address(this), recipient, amount);
     }
 
     //100 Gwei = 1 PM
