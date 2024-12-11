@@ -90,6 +90,8 @@ export const useNftFunctions = () => {
     // Funções de escrita
     writeNftMilhasCreateToken,
     writeNftMilhasBuyNft,
+    buyNft,
+    createToken,
 
     // Funções de leitura
     getNftPrice,
