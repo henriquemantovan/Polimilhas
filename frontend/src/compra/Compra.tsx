@@ -1,6 +1,24 @@
 import React, { useState } from "react";
 import Header from "../Header";
+import { useTokenFunctions } from "../utils/token20Functions";
 
+const { readPoliMilhasTokenCost, buyTokens } = useTokenFunctions();
+
+if (readPoliMilhasTokenCost !== undefined) {
+  const price = readPoliMilhasTokenCost.toString();
+  console.log("Token price:", readPoliMilhasTokenCost.toString());
+} else {
+  console.error("Failed to fetch token price: value is undefined.");
+}
+
+const handleCompra2 = async () => {
+  try {
+    const tx = await buyTokens(value);
+    console.log("Buy tokens:", tx);
+  } catch (error) {
+    console.error("Error buying tokens:", error);
+  }
+};
 
 const OpcaoButton = ({
   text,
@@ -19,9 +37,9 @@ const OpcaoButton = ({
       flexDirection: "column",
       justifyContent: "center",
       alignItems: "center",
-      width: "clamp(100px, 15vw, 140px)", 
+      width: "clamp(100px, 15vw, 140px)",
       height: "clamp(50px, 10vh, 70px)",
-      fontSize: "clamp(0.9rem, 1vw, 1.2rem)", 
+      fontSize: "clamp(0.9rem, 1vw, 1.2rem)",
       fontWeight: "bold",
       color: selected ? "#fff" : "#333",
       backgroundColor: selected ? "#2a738c" : "#e0e0e0",
@@ -39,21 +57,18 @@ const OpcaoButton = ({
     }}
     onMouseOut={(e) => {
       e.currentTarget.style.transform = "scale(1)";
-    }}
-  >
+    }}>
     <div
       style={{
-        fontSize: "clamp(1rem, 2vw, 1.3rem)", 
+        fontSize: "clamp(1rem, 2vw, 1.3rem)",
         marginBottom: "0.3rem",
-      }}
-    >
+      }}>
       {text}
     </div>
     <div
       style={{
-        fontSize: "clamp(0.8rem, 1.5vw, 1rem)", 
-      }}
-    >
+        fontSize: "clamp(0.8rem, 1.5vw, 1rem)",
+      }}>
       {price}
     </div>
   </div>
@@ -65,9 +80,9 @@ const CompraBotao = ({ onClick }: { onClick: () => void }) => (
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      width: "clamp(200px, 30vw, 400px)", 
-      height: "clamp(70px, 12vh, 100px)", 
-      fontSize: "clamp(1rem, 2vw, 1.5rem)", 
+      width: "clamp(200px, 30vw, 400px)",
+      height: "clamp(70px, 12vh, 100px)",
+      fontSize: "clamp(1rem, 2vw, 1.5rem)",
       fontWeight: "bold",
       textDecoration: "none",
       color: "#2a738c",
@@ -81,14 +96,12 @@ const CompraBotao = ({ onClick }: { onClick: () => void }) => (
       cursor: "pointer",
       marginBottom: "1rem",
     }}
-    onClick={onClick}
-  >
+    onClick={onClick}>
     <span
       style={{
         zIndex: "2",
         position: "relative",
-      }}
-    >
+      }}>
       Comprar
     </span>
     <div
@@ -103,8 +116,7 @@ const CompraBotao = ({ onClick }: { onClick: () => void }) => (
         transition: "transform 0.3s ease",
         zIndex: "1",
       }}
-      className="hoverEffect"
-    ></div>
+      className="hoverEffect"></div>
     <style>
       {`
         a:hover {
@@ -122,10 +134,8 @@ const CompraBotao = ({ onClick }: { onClick: () => void }) => (
   </a>
 );
 
-
 const Compra: React.FC = () => {
   const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null);
-
 
   const opcoes = [
     { quantidade: 50, preco: "5 XRP" },
@@ -163,28 +173,25 @@ const Compra: React.FC = () => {
         color: "#fff",
         fontFamily: "'Asap', sans-serif",
         padding: "0.5rem",
-      }}
-    >
+      }}>
       <Header />
-      
+
       <h1
         style={{
-          fontSize: "clamp(2rem, 4vw, 3rem)", 
+          fontSize: "clamp(2rem, 4vw, 3rem)",
           marginBottom: "1rem",
           color: "#2a738c",
-        }}
-      >
+        }}>
         Compra de Tokens
       </h1>
 
       <p
         style={{
           marginBottom: "1.7rem",
-          fontSize: "clamp(1rem, 2vw, 1.2rem)", 
+          fontSize: "clamp(1rem, 2vw, 1.2rem)",
           color: "#ccc",
           textAlign: "center",
-        }}
-      >
+        }}>
         Selecione a quantidade desejada e clique no botão para concluir a compra.
       </p>
 
@@ -197,8 +204,7 @@ const Compra: React.FC = () => {
           marginBottom: "2rem",
           width: "100%",
           maxWidth: "700px",
-        }}
-      >
+        }}>
         {opcoes.map((opcao) => (
           <OpcaoButton
             key={opcao.quantidade}
@@ -211,7 +217,6 @@ const Compra: React.FC = () => {
       </div>
 
       <CompraBotao onClick={handleCompra} />
-
     </div>
   );
 };
