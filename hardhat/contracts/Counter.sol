@@ -28,7 +28,7 @@ contract PoliMilhas is ERC20("PoliMilhas", "PM"){
 
 
     function sendToContract(uint qnt) public{
-        require(msg.sender.balance >= qnt, "Not enough Tokens");
+        require(balanceOf(msg.sender) >= qnt, "Not enough Tokens");
         _transfer(address(msg.sender), address(this), qnt);
           emit TokensSentToContract(msg.sender, qnt);
     
@@ -36,7 +36,7 @@ contract PoliMilhas is ERC20("PoliMilhas", "PM"){
 
 
     function senToAnotherUser(uint qnt, address vendor) public {
-        require(msg.sender.balance >= qnt, "Not enough Tokens");
+        require(balanceOf(msg.sender) >= qnt, "Not enough Tokens");
         _transfer(address(msg.sender), address(vendor), qnt);
 
 
@@ -57,17 +57,27 @@ contract PoliMilhas is ERC20("PoliMilhas", "PM"){
 
     function buyTokens() public payable {
         require(msg.value >= TokenCost* 1 gwei, "Minimum purchase is 100 Gwei");
-        uint256 tokenAmount = msg.value / TokenCost* 1 gwei;
-        require(totalSupply() >= tokenAmount, "Contract does not have enough tokens");
+        uint256 tokenAmount = msg.value / (TokenCost* 1 gwei);
+        require(balanceOf(address(this)) >= tokenAmount, "Contract does not have enough tokens");
          _transfer(address(this), msg.sender, tokenAmount);
+
     }
 
    function RedeemToken(uint price) public payable{
-        require(msg.sender.balance >= price, "Not enough Tokens");
+        require(balanceOf(msg.sender) >= price, "Not enough Tokens");
         _transfer(msg.sender, address(this), price);
         emit TokenRedeemed(msg.sender, price);
    }
 
 
+    function withdraw() public {
+        require(msg.sender == owner, "Only the owner can withdraw funds");
+        uint256 balance = address(this).balance;
+        require(balance > 0, "No funds to withdraw");
+        (bool success, ) = owner.call{value: balance}("");
+        require(success, "Withdrawal failed");
+    }
 
-}   
+
+
+}  
