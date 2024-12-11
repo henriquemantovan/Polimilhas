@@ -5,14 +5,17 @@ pragma solidity >=0.8.2 <0.9.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract PoliMilhas is ERC20("PoliMilhas", "PM"){
-    address public owner;
     
+    address public owner;
+    uint256 public TokenCost;
+
     event TokenRedeemed(address user, uint256 amount);  
     event TokensSentToContract(address sender, uint256 amount);
 
     constructor() {
         owner = msg.sender; 
     }
+
     function CreateNewToken(uint256 amount) public{
         require(msg.sender == owner);
         _mint(address(this), amount);
@@ -32,7 +35,6 @@ contract PoliMilhas is ERC20("PoliMilhas", "PM"){
     }
 
 
-
     function senToAnotherUser(uint qnt, address vendor) public {
         require(msg.sender.balance >= qnt, "Not enough Tokens");
         _transfer(address(msg.sender), address(vendor), qnt);
@@ -46,10 +48,16 @@ contract PoliMilhas is ERC20("PoliMilhas", "PM"){
         _transfer(address(this), recipient, amount);
     }
 
-    //100 Gwei = 1 PM
+    
+    function setTokenPrice(uint256 newPrice) public {
+        require(msg.sender == owner, "Only the owner can do this");
+        TokenCost = newPrice;
+
+    }
+
     function buyTokens() public payable {
-        require(msg.value >= 100 gwei, "Minimum purchase is 100 Gwei");
-        uint256 tokenAmount = msg.value / 100 gwei;
+        require(msg.value >= TokenCost* 1 gwei, "Minimum purchase is 100 Gwei");
+        uint256 tokenAmount = msg.value / TokenCost* 1 gwei;
         require(totalSupply() >= tokenAmount, "Contract does not have enough tokens");
          _transfer(address(this), msg.sender, tokenAmount);
     }
