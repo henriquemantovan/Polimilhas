@@ -2,23 +2,6 @@ import React, { useState } from "react";
 import Header from "../Header";
 import { useTokenFunctions } from "../utils/token20Functions";
 
-const { readPoliMilhasTokenCost, buyTokens } = useTokenFunctions();
-
-if (readPoliMilhasTokenCost !== undefined) {
-  const price = readPoliMilhasTokenCost.toString();
-  console.log("Token price:", readPoliMilhasTokenCost.toString());
-} else {
-  console.error("Failed to fetch token price: value is undefined.");
-}
-
-const handleCompra2 = async () => {
-  try {
-    const tx = await buyTokens(value);
-    console.log("Buy tokens:", tx);
-  } catch (error) {
-    console.error("Error buying tokens:", error);
-  }
-};
 
 const OpcaoButton = ({
   text,
@@ -29,7 +12,7 @@ const OpcaoButton = ({
   text: string;
   onClick: () => void;
   selected: boolean;
-  price: string;
+  price: number;
 }) => (
   <div
     style={{
@@ -136,17 +119,23 @@ const CompraBotao = ({ onClick }: { onClick: () => void }) => (
 
 const Compra: React.FC = () => {
   const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null);
+  const { readPoliMilhasTokenCost, buyTokens } = useTokenFunctions();
 
-  const opcoes = [
-    { quantidade: 50, preco: "5 XRP" },
-    { quantidade: 100, preco: "9 XRP" },
-    { quantidade: 200, preco: "17 XRP" },
-    { quantidade: 400, preco: "33 XRP" },
-    { quantidade: 800, preco: "65 XRP" },
-    { quantidade: 1500, preco: "120 XRP" },
-    { quantidade: 3000, preco: "230 XRP" },
-    { quantidade: 5000, preco: "370 XRP" },
-  ];
+  const price = readPoliMilhasTokenCost ?? 0; 
+
+  if (readPoliMilhasTokenCost !== undefined) {
+    console.log("Token price:", readPoliMilhasTokenCost);
+  } else {
+    console.error("Failed to fetch token price: value is undefined.");
+  }
+  const numericPrice = Number(price);
+
+  const quantities = [50, 100, 200, 400, 800, 1500, 3000, 5000];
+  const opcoes = quantities.map((quantidade) => ({
+    quantidade,
+    preco: numericPrice * quantidade, //isso ta em gwai 
+  }));
+    
 
   const handleSelectQuantity = (quantidade: number) => {
     setSelectedQuantity(quantidade);
