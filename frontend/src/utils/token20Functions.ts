@@ -10,6 +10,7 @@ import {
   useWritePoliMilhasSendToContract,
   useWritePoliMilhasSenToAnotherUser,
   useWritePoliMilhasSetTokenPrice,
+  useWritePoliMilhasApprove,
 } from "../generated";
 
 export const useTokenFunctions = () => {
@@ -98,8 +99,29 @@ export const useTokenFunctions = () => {
     isSuccess: isWithdrawSuccess,
     isError: isWithdrawError,
   } = useWritePoliMilhasWithdraw();
+  const {
+    writeContractAsync: writePoliMilhasApprove,
+    isPending: isApprovePending,
+    isSuccess: isApproveSuccess,
+    isError: isApproveError,
+  } = useWritePoliMilhasApprove();
 
   // Funções de exemplo para leitura e escrita
+
+  const Approve = async (nftContract: string, amount: number) => {
+    const bigIntAmount = BigInt(amount);
+    try {
+      const tx = await writePoliMilhasApprove({
+        address: contractAddress,
+        args: [validateAndFormatAddress(nftContract), bigIntAmount],
+      });
+      console.log("Token approved:", tx);
+      return tx;
+    } catch (error) {
+      console.error("Error approving token:", error);
+      return null;
+    }
+  };
 
   const CreateNewToken = async (amount: number) => {
     const bigIntAmount = BigInt(amount);
@@ -116,7 +138,7 @@ export const useTokenFunctions = () => {
     }
   };
 
-  const buyTokens = async (value: string) => {
+  const buyTokens = async (value: number) => {
     const bigIntValue = BigInt(value);
     try {
       const tx = await writePoliMilhasBuyTokens({
@@ -259,6 +281,9 @@ export const useTokenFunctions = () => {
     isTokenCostLoadin,
     isTotalSupplyError,
     isTotalSupplyLoading,
+    isApprovePending,
+    isApproveSuccess,
+    isApproveError,
 
     // Funções utilitárias
     CreateNewToken,
@@ -269,5 +294,6 @@ export const useTokenFunctions = () => {
     senToAnotherUser,
     setTokenPrice,
     Withdraw,
+    Approve,
   };
 };
