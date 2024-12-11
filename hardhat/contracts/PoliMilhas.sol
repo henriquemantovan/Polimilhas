@@ -1,74 +1,74 @@
 // SPDX-License-Identifier: GPL-3.0
 
-
 pragma solidity >=0.8.2 <0.9.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract PoliMilhas is ERC20("PoliMilhas", "PM"){
-    
+contract PoliMilhas is ERC20("PoliMilhas", "PM") {
     address public owner;
     uint256 public TokenCost;
 
-    event TokenRedeemed(address user, uint256 amount);  
+    event TokenRedeemed(address user, uint256 amount);
     event TokensSentToContract(address sender, uint256 amount);
 
     constructor() {
-        owner = msg.sender; 
+        owner = msg.sender;
     }
 
-    function CreateNewToken(uint256 amount) public{
+    function CreateNewToken(uint256 amount) public {
         require(msg.sender == owner);
         _mint(address(this), amount);
-
     }
-    
+
     function approveNFTContract(address nftContract) public {
         approve(nftContract, type(uint256).max);
     }
 
-
-    function sendToContract(uint qnt) public{
+    function sendToContract(uint qnt) public {
         require(balanceOf(msg.sender) >= qnt, "Not enough Tokens");
         _transfer(address(msg.sender), address(this), qnt);
-          emit TokensSentToContract(msg.sender, qnt);
-    
+        emit TokensSentToContract(msg.sender, qnt);
     }
-
 
     function senToAnotherUser(uint qnt, address vendor) public {
         require(balanceOf(msg.sender) >= qnt, "Not enough Tokens");
         _transfer(address(msg.sender), address(vendor), qnt);
-
-
     }
 
-    function sendTokens (address recipient, uint256 amount) public {
-        require(msg.sender == owner, "Only the owner can send tokens from the contract");
-        require(balanceOf(address(this)) >= amount, "Contract does not have enough tokens");
+    function sendTokens(address recipient, uint256 amount) public {
+        require(
+            msg.sender == owner,
+            "Only the owner can send tokens from the contract"
+        );
+        require(
+            balanceOf(address(this)) >= amount,
+            "Contract does not have enough tokens"
+        );
         _transfer(address(this), recipient, amount);
     }
 
-    
     function setTokenPrice(uint256 newPrice) public {
         require(msg.sender == owner, "Only the owner can do this");
         TokenCost = newPrice;
-
     }
 
     function buyTokens() public payable {
-        require(msg.value >= TokenCost* 1 gwei, "Minimum purchase is 100 Gwei");
-        uint256 tokenAmount = msg.value / (TokenCost* 1 gwei);
-        require(balanceOf(address(this)) >= tokenAmount, "Contract does not have enough tokens");
-         _transfer(address(this), msg.sender, tokenAmount);
-
+        require(
+            msg.value >= TokenCost * 1 gwei,
+            "Minimum purchase is 100 Gwei"
+        );
+        uint256 tokenAmount = msg.value / (TokenCost * 1 gwei);
+        require(
+            balanceOf(address(this)) >= tokenAmount,
+            "Contract does not have enough tokens"
+        );
+        _transfer(address(this), msg.sender, tokenAmount);
     }
 
-   function RedeemToken(uint price) public payable{
+    function RedeemToken(uint price) public payable {
         require(balanceOf(msg.sender) >= price, "Not enough Tokens");
         _transfer(msg.sender, address(this), price);
         emit TokenRedeemed(msg.sender, price);
-   }
-
+    }
 
     function withdraw() public {
         require(msg.sender == owner, "Only the owner can withdraw funds");
@@ -77,7 +77,4 @@ contract PoliMilhas is ERC20("PoliMilhas", "PM"){
         (bool success, ) = owner.call{value: balance}("");
         require(success, "Withdrawal failed");
     }
-
-
-
-}  
+}
