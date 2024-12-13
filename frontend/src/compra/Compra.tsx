@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "../Header";
 import { useTokenFunctions } from "../utils/token20Functions";
 
-
 const OpcaoButton = ({
   text,
   onClick,
@@ -117,7 +116,7 @@ const CompraBotao = ({ onClick }: { onClick: () => void }) => (
   </a>
 );
 
-const Compra: React.FC = () => {
+const  Compra: React.FC = () => {
   const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null);
   const { readPoliMilhasTokenCost, buyTokens } = useTokenFunctions();
 
@@ -141,12 +140,21 @@ const Compra: React.FC = () => {
     setSelectedQuantity(quantidade);
   };
 
-  const handleCompra = () => {
-    if (selectedQuantity) {
-      alert(`Compra realizada: ${selectedQuantity} tokens!`);
-      setSelectedQuantity(null);
-    } else {
-      alert("Compra não realizada.");
+  const handleCompra = async() => {
+    if (selectedQuantity === null) {
+      alert("Por favor, selecione uma quantidade antes de comprar.");
+      return;
+    }
+    const value = numericPrice * selectedQuantity;
+    try {
+      const tx = await buyTokens(value);
+      if (tx) {
+        alert(`Compra realizada: ${selectedQuantity} tokens!`);
+        setSelectedQuantity(null);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Erro.");
     }
   };
 
