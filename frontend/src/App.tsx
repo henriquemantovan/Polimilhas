@@ -346,7 +346,7 @@ function Home() {
             path="/compra" 
           />
         </div> 
-        
+        {/*
         <div 
           style={{ 
             textAlign: "center", 
@@ -385,8 +385,9 @@ function Home() {
           <Button 
             text="Resgatar Tokens" 
             path="/resgate" 
-          />
-        </div>
+          /> 
+        </div> 
+        */}
         
         <div 
           style={{ 
@@ -726,7 +727,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/Home" element={<Home />} />
         <Route path="/compra" element={<Compra/>} />
-        <Route path="/resgate" element={<Resgate />} />
+        {/* <Route path="/resgate" element={<Resgate />} /> */}
         <Route path="/transferir" element={<Transferir />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "../Header";
 import { useTokenFunctions } from "../utils/token20Functions";
 
-
 const OpcaoButton = ({
   text,
   onClick,

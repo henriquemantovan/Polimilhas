@@ -1,20 +1,37 @@
 import React, { useState } from "react";
 import Header from "../Header";
 import arquivoIcon from "../../images/aviao.png";
-
+import { useTokenFunctions } from "../utils/token20Functions";
 
 const TransferirTokens: React.FC = () => {
+  const { senToAnotherUser } = useTokenFunctions();
   const [endereco, setEndereco] = useState("");
-  const [quantidade, setQuantidade] = useState("");
+  const [quantidade, setQuantidade] = useState<number>(0);;
+  const [mensagem, setMensagem] = useState("");
 
 
-  const handleTransferencia = () => {
-    alert(
-      `Deu certo!\nEndereço: ${endereco}\nQuantidade: ${quantidade}`
-    );
+
+  const handleTransferencia = async () => {
+    if (!endereco || quantidade <= 0) {
+      setMensagem("Por favor, preencha todos os campos corretamente.");
+      return;
+    }
+
+    setMensagem("Transferindo tokens...");
+    try {
+      const resultado = await senToAnotherUser(quantidade, endereco);
+      if (resultado) {
+        setMensagem("Tokens transferidos com sucesso!");
+      } else {
+        setMensagem("Erro na transferência. Por favor, tente novamente.");
+      }
+    } catch (error) {
+      console.error("Erro na transferência de tokens:", error);
+      setMensagem("Erro inesperado ao transferir tokens.");
+    }
 
     setEndereco("");
-    setQuantidade("");
+    setQuantidade(0);
   };
 
   return (
@@ -115,7 +132,7 @@ const TransferirTokens: React.FC = () => {
         <input
           type="number"
           value={quantidade}
-          onChange={(e) => setQuantidade(e.target.value)}
+          onChange={(e) => setQuantidade(Number(e.target.value))}
           style={{
             width: "clamp(200px, 20vw, 250px)", // Input ajustado para tamanho menor
             height: "35px",
@@ -158,6 +175,17 @@ const TransferirTokens: React.FC = () => {
       >
         Transferir
       </div>
+      {mensagem && (
+        <p
+          style={{
+            marginTop: "1rem",
+            fontSize: "clamp(0.8rem, 1.2vw, 1.1rem)",
+            color: mensagem.includes("sucesso") ? "#2a738c" : "#f00",
+          }}
+        >
+          {mensagem}
+        </p>
+      )}
 
       <div
     style={{
