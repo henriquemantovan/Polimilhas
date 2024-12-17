@@ -87,8 +87,8 @@ a:hover:after{
 }
 
 .button-hover:hover {
-  background-color: #2a738c !important;
-  transform: translateY(-3px);
+  background-color: #0f81a7 !important;
+  transform: translateY(-5px);
 }
 
 
