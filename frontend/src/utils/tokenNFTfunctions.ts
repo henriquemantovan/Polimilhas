@@ -70,7 +70,7 @@ export const useNftFunctions = () => {
     }
   };
 
-  const createToken = async (tokenId: number, tokenImage: string, price: number) => {
+  const createNFT = async (tokenId: number, tokenImage: string, price: number) => {
     const bigIntTokenId = BigInt(tokenId);
     const bigIntPrice = BigInt(price);
     try {
@@ -91,7 +91,7 @@ export const useNftFunctions = () => {
     writeNftMilhasCreateToken,
     writeNftMilhasBuyNft,
     buyNft,
-    createToken,
+    createNFT,
 
     // Funções de leitura
     getNftPrice,
