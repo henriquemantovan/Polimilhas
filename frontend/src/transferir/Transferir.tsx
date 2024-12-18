@@ -3,6 +3,8 @@ import Header from "../Header";
 import arquivoIcon from "../../images/aviao.png";
 import { useTokenFunctions } from "../utils/token20Functions";
 
+//ADMINISTRAR TOKENS
+//APPROVE
 const TransferirTokens: React.FC = () => {
   const { senToAnotherUser } = useTokenFunctions();
   const [endereco, setEndereco] = useState("");
