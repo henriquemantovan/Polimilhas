@@ -109,7 +109,7 @@ export const useTokenFunctions = () => {
 
   // Funções de exemplo para leitura e escrita
 
-  //COLOCAR NO NFT {/*nftContract*/}
+  // {/*nftContract*/}
   const Approve = async (amount: number) => {
     const bigIntAmount = BigInt(amount);
     try {
@@ -173,7 +173,6 @@ export const useTokenFunctions = () => {
     }
   };
 
-  //IMPLEMENTAR NO ADM
   const sendTokens = async (recipient: string, amount: number) => {
     const bigIntAmount = BigInt(amount);
     try {
@@ -220,7 +219,6 @@ export const useTokenFunctions = () => {
     }
   };
 
-  //IMPLEMENTAR NO ADM
   const setTokenPrice = async (newPrice: number) => {
     const bigIntPrice = BigInt(newPrice);
     try {
