@@ -2,6 +2,8 @@ import React from "react";
 import Header from "../Header";
 
 
+//TIRAMOS
+
 const Resgate: React.FC = () => {
   const handleResgate = () => {
     alert("Funciona");

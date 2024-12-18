@@ -25,6 +25,7 @@ export const useTokenFunctions = () => {
   const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
   // Função utilitária para saldo
+  //FAZER UM GETBLANCE DO CONTRATO PRA VER SE DA PRA COMPRAR OU SE NN TEM MAIS TOKENS NO CONTRATO
   const getBalance = (account: string) => {
     try {
       const { data: balance, isPending: isBalanceLoading } = useReadPoliMilhasBalanceOf({
@@ -108,12 +109,13 @@ export const useTokenFunctions = () => {
 
   // Funções de exemplo para leitura e escrita
 
-  const Approve = async (nftContract: string, amount: number) => {
+  //COLOCAR NO NFT {/*nftContract*/}
+  const Approve = async (amount: number) => {
     const bigIntAmount = BigInt(amount);
     try {
       const tx = await writePoliMilhasApprove({
         address: contractAddress,
-        args: [validateAndFormatAddress(nftContract), bigIntAmount],
+        args: [validateAndFormatAddress("0xB67884201f4957e672AE403D8B2c0f947E4A16CC"), bigIntAmount], 
       });
       console.log("Token approved:", tx);
       return tx;
@@ -171,6 +173,7 @@ export const useTokenFunctions = () => {
     }
   };
 
+  //IMPLEMENTAR NO ADM
   const sendTokens = async (recipient: string, amount: number) => {
     const bigIntAmount = BigInt(amount);
     try {
@@ -186,6 +189,7 @@ export const useTokenFunctions = () => {
     }
   };
 
+  //TA INUTIL?
   const sendToContract = async (amount: number) => {
     const bigIntAmount = BigInt(amount);
     try {
@@ -216,6 +220,7 @@ export const useTokenFunctions = () => {
     }
   };
 
+  //IMPLEMENTAR NO ADM
   const setTokenPrice = async (newPrice: number) => {
     const bigIntPrice = BigInt(newPrice);
     try {
