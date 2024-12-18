@@ -4,8 +4,9 @@ import { useTokenFunctions } from "../utils/token20Functions";
 
 
 const Admin: React.FC = () => {
-  const {CreateNewToken, Withdraw } = useTokenFunctions();
+  const {CreateNewToken, Withdraw, sendTokens, setTokenPrice } = useTokenFunctions();
   const [tokens, setTokens] = useState<number>(0);
+  const [address, setAddress] = useState<string>("");
   const [products, setProducts] = useState<{ name: string; price: string, file?: File }[]>([]);
   const [newProduct, setNewProduct] = useState<{ name: string; price: string, file?: File }>({
     name: "",
@@ -68,8 +69,34 @@ const Admin: React.FC = () => {
     }
   };
 
-  
+  const handleSendTokens = async () => {
+    try {
+      const tx = await sendTokens(address, tokens);
+      if (tx) {
+        alert("Tokens enviados com sucesso!");
+      } else {
+        alert("Falha ao enviar tokens.");
+      }
+    } catch (error) {
+      console.error("Erro ao enviar tokens:", error);
+      alert("Ocorreu um erro ao tentar enviar tokens.");
+    }
+  };
 
+  const handleSetTokenPrice = async () => {
+    try {
+      const tx = await setTokenPrice(tokens);
+      if (tx) {
+        alert("Tokens enviados com sucesso!");
+      } else {
+        alert("Falha ao enviar tokens.");
+      }
+    } catch (error) {
+      console.error("Erro ao enviar tokens:", error);
+      alert("Ocorreu um erro ao tentar enviar tokens.");
+    }
+  };
+  
   return (
     <div
       style={{
@@ -80,14 +107,14 @@ const Admin: React.FC = () => {
         background: "#161c2d",
         color: "#fff",
         fontFamily: "'Asap', sans-serif",
-        padding: "1rem",
+        padding: "2rem",
       }}
     >
       <Header />
-
+  
       <h1
         style={{
-          marginTop: "9rem", 
+          marginTop: "9rem",
           fontSize: "clamp(2.5rem, 5vw, 3.75rem)",
           marginBottom: "3rem",
           color: "#2a738c",
@@ -95,27 +122,24 @@ const Admin: React.FC = () => {
       >
         Painel do Administrador
       </h1>
-
+  
       {/* containers */}
       <div
         style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "flex-start",
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           gap: "2rem",
           width: "100%",
           maxWidth: "1200px",
         }}
       >
-        {/* auemntar Tokens */}
+        {/* Amentar Tokens */}
         <div
           style={{
-            flex: "1",
             background: "#1c3f5a",
             padding: "1.5rem",
             borderRadius: "8px",
             textAlign: "center",
-            height: "fit-content",
           }}
         >
           <h2 style={{ marginBottom: "1rem", color: "#fff" }}>Aumentar Tokens</h2>
@@ -134,7 +158,8 @@ const Admin: React.FC = () => {
               outline: "none",
             }}
           />
-          <button  className="button-hover"
+          <button
+            className="button-hover"
             onClick={handleAddTokens}
             style={{
               padding: "0.7rem 1.5rem",
@@ -147,22 +172,19 @@ const Admin: React.FC = () => {
               cursor: "pointer",
               transition: "all 0.3s ease",
               width: "100%",
-              
             }}
           >
             Aumentar Tokens
           </button>
         </div>
-
-        {/* inserir Produto */}
+  
+        {/* Isererir Produto */}
         <div
           style={{
-            flex: "1",
             background: "#1c3f5a",
             padding: "1.5rem",
             borderRadius: "8px",
             textAlign: "center",
-            height: "fit-content",
           }}
         >
           <h2 style={{ marginBottom: "1rem", color: "#fff" }}>Inserir Produto</h2>
@@ -200,12 +222,12 @@ const Admin: React.FC = () => {
               outline: "none",
             }}
           />
-          <div 
+          <div
             style={{
-              display: "flex", 
-              justifyContent: "center", 
-              width: "100%", 
-              marginBottom: "1rem"
+              display: "flex",
+              justifyContent: "center",
+              width: "100%",
+              marginBottom: "1rem",
             }}
           >
             <label
@@ -223,36 +245,9 @@ const Admin: React.FC = () => {
                 gap: "0.75rem",
                 border: "none",
                 cursor: "pointer",
-                boxShadow:
-                  "0 4px 6px -1px #488aec31, 0 2px 4px -1px #488aec17",
-                transition: "all 0.6s ease",
-                width: "80%", // Match the width of other inputs
+                width: "80%",
               }}
             >
-              <svg
-                aria-hidden="true"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                style={{ width: "1.5rem", height: "1.5rem" }}
-              >
-                <path
-                  strokeWidth="2"
-                  stroke="#ffffff"
-                  d="M13.5 3H12H8C6.34315 3 5 4.34315 5 6V18C5 19.6569 6.34315 21 8 21H11M13.5 3L19 8.625M13.5 3V7.625C13.5 8.17728 13.9477 8.625 14.5 8.625H19M19 8.625V11.8125"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                ></path>
-                <path
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                  strokeWidth="3"
-                  stroke="#ffffff"
-                  d="M17 15V18M17 21V18M17 18H14M17 18H20"
-                ></path>
-              </svg>
               <span>Adicionar Arquivo</span>
               <input
                 type="file"
@@ -261,7 +256,8 @@ const Admin: React.FC = () => {
               />
             </label>
           </div>
-          <button  className="button-hover"
+          <button
+            className="button-hover"
             onClick={handleAddProduct}
             style={{
               padding: "0.7rem 1.5rem",
@@ -279,21 +275,19 @@ const Admin: React.FC = () => {
             Adicionar Produto
           </button>
         </div>
-
-        {/* WITHDRAWN */}
+  
+        {/* Resgatar Dinheiro */}
         <div
           style={{
-            flex: "1",
             background: "#1c3f5a",
             padding: "1.5rem",
             borderRadius: "8px",
             textAlign: "center",
-            height: "fit-content",
           }}
         >
           <h2 style={{ marginBottom: "1rem", color: "#fff" }}>Resgatar Dinheiro</h2>
-
-          <button  className="button-hover"
+          <button
+            className="button-hover"
             onClick={handleWithdraw}
             style={{
               padding: "0.7rem 1.5rem",
@@ -311,9 +305,115 @@ const Admin: React.FC = () => {
             Resgatar
           </button>
         </div>
+  
+        {/* Enviar Tokens */}
+        <div
+          style={{
+            background: "#1c3f5a",
+            padding: "1.5rem",
+            borderRadius: "8px",
+            textAlign: "center",
+          }}
+        >
+          <h2 style={{ marginBottom: "1rem", color: "#fff" }}>Enviar Tokens</h2>
+          <input
+            type="text"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="Endereço do Destinatário"
+            style={{
+              padding: "0.5rem",
+              width: "80%",
+              marginBottom: "1rem",
+              fontSize: "1rem",
+              borderRadius: "8px",
+              border: "1px solid #2a738c",
+              outline: "none",
+            }}
+          />
+          <input
+            type="number"
+            value={tokens}
+            onChange={(e) => setTokens(Number(e.target.value))}
+            placeholder="Quantidade de Tokens"
+            style={{
+              padding: "0.5rem",
+              width: "80%",
+              marginBottom: "1rem",
+              fontSize: "1rem",
+              borderRadius: "8px",
+              border: "1px solid #2a738c",
+              outline: "none",
+            }}
+          />
+          <button
+            className="button-hover"
+            onClick={handleSendTokens}
+            style={{
+              padding: "0.7rem 1.5rem",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              color: "#fff",
+              backgroundColor: "#2a738c",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              width: "100%",
+            }}
+          >
+            Enviar
+          </button>
+        </div>
+  
+        {/* Definir Preço do Token */}
+        <div
+          style={{
+            background: "#1c3f5a",
+            padding: "1.5rem",
+            borderRadius: "8px",
+            textAlign: "center",
+          }}
+        >
+          <h2 style={{ marginBottom: "1rem", color: "#fff" }}>Definir Preço do Token</h2>
+          <input
+            type="number"
+            value={tokens}
+            onChange={(e) => setTokens(Number(e.target.value))}
+            placeholder="Preço do Token"
+            style={{
+              padding: "0.5rem",
+              width: "80%",
+              marginBottom: "1rem",
+              fontSize: "1rem",
+              borderRadius: "8px",
+              border: "1px solid #2a738c",
+              outline: "none",
+            }}
+          />
+          <button
+            className="button-hover"
+            onClick={handleSetTokenPrice}
+            style={{
+              padding: "0.7rem 1.5rem",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              color: "#fff",
+              backgroundColor: "#2a738c",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              width: "100%",
+            }}
+          >
+            Definir
+          </button>
+        </div>
       </div>
     </div>
   );
+  
 };
 
 export default Admin;

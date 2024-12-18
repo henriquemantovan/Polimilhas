@@ -3,13 +3,14 @@ import Header from "../Header";
 import arquivoIcon from "../../images/aviao.png";
 import { useTokenFunctions } from "../utils/token20Functions";
 
-//ADMINISTRAR TOKENS
-//APPROVE
-const TransferirTokens: React.FC = () => {
-  const { senToAnotherUser } = useTokenFunctions();
+const AdminTokens: React.FC = () => {
+  const { senToAnotherUser, Approve } = useTokenFunctions();
   const [endereco, setEndereco] = useState("");
   const [quantidade, setQuantidade] = useState<number>(0);;
   const [mensagem, setMensagem] = useState("");
+
+  const [quantidadePermitir, setQuantidadePermitir] = useState<number>(0);
+  const [mensagemPermitir, setMensagemPermitir] = useState("");
 
   const handleTransferencia = async () => {
     if (!endereco || quantidade <= 0) {
@@ -34,6 +35,28 @@ const TransferirTokens: React.FC = () => {
     setQuantidade(0);
   };
 
+  const handlePermitir = async () => {
+    if (quantidadePermitir <= 0) {
+      setMensagemPermitir("Por favor, insira uma quantidade válida.");
+      return;
+    }
+
+    setMensagemPermitir("Processando...");
+    try {
+      const resultado = await Approve(quantidadePermitir);
+      if (resultado) {
+        setMensagemPermitir("Tokens permitidos com sucesso!");
+      } else {
+        setMensagemPermitir("Erro ao permitir tokens.");
+      }
+    } catch (error) {
+      console.error("Erro ao permitir tokens:", error);
+      setMensagemPermitir("Erro inesperado ao permitir tokens.");
+    }
+
+    setQuantidadePermitir(0);
+  };
+
   return (
     <div
       style={{
@@ -43,166 +66,199 @@ const TransferirTokens: React.FC = () => {
         alignItems: "center",
         minHeight: "100vh",
         background: "#161c2d",
-        color: "#fff",  
-        position: "relative",
+        color: "#fff",
         fontFamily: "'Asap', sans-serif",
         padding: "1rem",
-        
+        position: "relative",
       }}
     >
       <Header />
-      <h1
-        style={{
-          fontSize: "clamp(2rem, 3vw, 3rem)",
-          color: "#2a738c",
-          marginBottom: "0rem",
-        }}
-      >
-        Transferir Tokens
-      </h1>
-
-      <p
-        style={{
-          fontSize: "clamp(1rem, 1.5vw, 1rem)",
-          color: "#ccc",
-          textAlign: "center",
-          maxWidth: "400px",
-          marginBottom: "3rem",
-        }}
-      >
-        Preencha os campos abaixo para transferir seus tokens para o endereço desejado.
-      </p>
-
-      <div
-        style={{
-          marginBottom: "1rem",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <label
-          style={{
-            fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
-            color: "#ddd",
-            marginBottom: "0.3rem",
-          }}
-        >
-          Endereço do Destinatário
-        </label>
-        <input
-          type="text"
-          value={endereco}
-          onChange={(e) => setEndereco(e.target.value)}
-          style={{
-            width: "clamp(200px, 20vw, 250px)", // Input ajustado para tamanho menor
-            height: "35px",
-            padding: "0.5rem",
-            borderRadius: "8px",
-            border: "1px solid #333",
-            fontSize: "clamp(0.9rem, 1vw, 1.1rem)",
-            outline: "none",
-            zIndex: 3,
-            position: "relative",
-          }}
-        />
-      </div>
-
-      <div
-        style={{
-          marginBottom: "2rem",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          zIndex: 3,
-          position: "relative",
-        }}
-      >
-        <label
-          style={{
-            fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
-            color: "#ddd",
-            marginBottom: "0.3rem",
-            zIndex: 3,
-            position: "relative",
-          }}
-        >
-          Quantidade de Tokens
-        </label>
-        <input
-          type="number"
-          value={quantidade}
-          onChange={(e) => setQuantidade(Number(e.target.value))}
-          style={{
-            width: "clamp(200px, 20vw, 250px)", // Input ajustado para tamanho menor
-            height: "35px",
-            padding: "0.5rem",
-            borderRadius: "8px",
-            border: "1px solid #333",
-            fontSize: "clamp(0.9rem, 1vw, 1.1rem)",
-            outline: "none",
-            zIndex: 3,
-            position: "relative",
-          }}
-        />
-      </div>
-
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          alignItems: "center",
-          width: "clamp(250px, 35vw, 500px)", 
-          height: "clamp(70px, 15vh, 100px)", 
-          backgroundColor: "#2a738c",
-          color: "#fff",
-          fontSize: "clamp(1.2rem, 2vw, 2rem)",
-          fontWeight: "bold",
-          borderRadius: "8px",
-          cursor: "pointer",
-          transition: "transform 0.2s ease",
-          zIndex: 3,
-          position: "relative",
-
-        }}
-        onClick={handleTransferencia}
-        onMouseOver={(e) => {
-          e.currentTarget.style.transform = "scale(1.1)";
-        }}
-        onMouseOut={(e) => {
-          e.currentTarget.style.transform = "scale(1)";
+          alignItems: "flex-start",
+          gap: "4rem",
+          flexWrap: "wrap",
+          width: "95%",
+          maxWidth: "1000px",
+          
         }}
       >
-        Transferir
-      </div>
-      {mensagem && (
-        <p
+        {/* Container Transferir Tokens */}
+        <div
           style={{
-            marginTop: "1rem",
-            fontSize: "clamp(0.8rem, 1.2vw, 1.1rem)",
-            color: mensagem.includes("sucesso") ? "#2a738c" : "#f00",
+            flex: 1,
+            maxWidth: "450px",
+            background: "#1c2233",
+            padding: "2rem",
+            borderRadius: "8px",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
+            zIndex: 1,
           }}
         >
-          {mensagem}
-        </p>
-      )}
+          <h1
+            style={{
+              fontSize: "clamp(2rem, 3vw, 3rem)",
+              color: "#2a738c",
+              marginBottom: "-1rem",
+              marginTop: "0rem",
 
+            }}
+          >
+            Transferir Tokens
+          </h1>
+          <p style={{ color: "#ccc", marginBottom: "2rem" }}>
+            Preencha os campos abaixo para transferir seus tokens para o endereço
+            desejado.
+          </p>
+          <div>
+            <label style={{ color: "#ddd" }}>Endereço do Destinatário</label>
+            <input
+              type="text"
+              value={endereco}
+              onChange={(e) => setEndereco(e.target.value)}
+              style={{
+                width: "95%",
+                marginBottom: "1rem",
+                padding: "0.5rem",
+                borderRadius: "8px",
+                border: "1px solid #333",
+              }}
+            />
+          </div>
+          <div>
+            <label style={{ color: "#ddd" }}>Quantidade de Tokens</label>
+            <input
+              type="number"
+              value={quantidade}
+              onChange={(e) => setQuantidade(Number(e.target.value))}
+              style={{
+                width: "95%",
+                marginBottom: "1rem",
+                padding: "0.5rem",
+                borderRadius: "8px",
+                border: "1px solid #333",
+              }}
+            />
+          </div>
+          <button  className="button-hover"
+            onClick={handleTransferencia}
+            style={{
+              padding: "0.7rem 1.5rem",
+              fontWeight: "bold",
+              color: "#fff",
+              backgroundColor: "#2a738c",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              width: "100%",
+              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
+              marginTop: "0.5rem",
+            }}
+          >
+            Transferir
+          </button>
+          {mensagem && (
+            <p
+              style={{
+                marginTop: "1rem",
+                color: mensagem.includes("sucesso") ? "#2a738c" : "#f00",
+              }}
+            >
+              {mensagem}
+            </p>
+          )}
+        </div>
+
+        {/* Container Permitir Tokens */}
+        <div
+          style={{
+            flex: 1,
+            maxWidth: "450px",
+            background: "#1c2233",
+            padding: "2rem",
+            borderRadius: "8px",
+            boxShadow: "0 4px 10px rgba(0, 0, 0, 0.3)",
+            zIndex: 1,
+          }}
+        >
+          <h1
+            style={{
+              fontSize: "clamp(2rem, 3vw, 3rem)",
+              color: "#2a738c",
+              marginBottom: "-1rem",
+              marginTop: "0rem",
+            }}
+          >
+            Permitir Tokens
+          </h1>
+          <p style={{ color: "#ccc", marginBottom: "2rem" }}>
+            Insira a quantidade de tokens que deseja permitir para a compra de NFTs.
+          </p>
+          <div>
+            <label style={{ color: "#ddd" }}>Quantidade de Tokens</label>
+            <input
+              type="number"
+              value={quantidadePermitir}
+              onChange={(e) => setQuantidadePermitir(Number(e.target.value))}
+              style={{
+                width: "95%",
+                marginBottom: "1rem",
+                padding: "0.5rem",
+                borderRadius: "8px",
+                border: "1px solid #333",
+              }}
+            />
+          </div>
+          <button  className="button-hover"
+            onClick={handlePermitir}
+            style={{
+              padding: "0.7rem 1.5rem",
+              fontWeight: "bold",
+              color: "#fff",
+              backgroundColor: "#2a738c",
+              borderRadius: "8px",
+              border: "none",
+              cursor: "pointer",
+              transition: "all 0.3s ease",
+              width: "100%",
+              fontSize: "clamp(1rem, 1.2vw, 1.2rem)",
+              marginTop: "0.5rem",
+
+            }}
+          >
+            Permitir
+          </button>
+          {mensagemPermitir && (
+            <p
+              style={{
+                marginTop: "1rem",
+                color: mensagemPermitir.includes("sucesso") ? "#2a738c" : "#f00",
+              }}
+            >
+              {mensagemPermitir}
+            </p>
+          )}
+        </div>
+      </div>
       <div
-    style={{
-      position: "absolute",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backgroundImage: `url(${arquivoIcon})`,
-      backgroundRepeat: "repeat", // Repete a imagem em todo o fundo
-      backgroundSize: "15%", 
-      opacity: 0.03,
-      zIndex: 2,
-    }}
-  />
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `url(${arquivoIcon})`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "15%",
+          opacity: 0.03,
+          zIndex: 0,
+        }}
+      />
     </div>
   );
 };
 
-export default TransferirTokens;
+export default AdminTokens;
