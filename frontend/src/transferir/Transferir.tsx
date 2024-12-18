@@ -11,8 +11,6 @@ const TransferirTokens: React.FC = () => {
   const [quantidade, setQuantidade] = useState<number>(0);;
   const [mensagem, setMensagem] = useState("");
 
-
-
   const handleTransferencia = async () => {
     if (!endereco || quantidade <= 0) {
       setMensagem("Por favor, preencha todos os campos corretamente.");
