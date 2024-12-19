@@ -1273,7 +1273,6 @@ export const nftMilhasAbi = [
     type: 'function',
     inputs: [
       { name: '_ID', internalType: 'uint256', type: 'uint256' },
-      { name: '_TokenImage', internalType: 'string', type: 'string' },
       { name: '_price', internalType: 'uint256', type: 'uint256' },
     ],
     name: 'CreateToken',
@@ -1413,13 +1412,6 @@ export const nftMilhasAbi = [
     type: 'function',
     inputs: [],
     name: 'symbol',
-    outputs: [{ name: '', internalType: 'string', type: 'string' }],
-    stateMutability: 'view',
-  },
-  {
-    type: 'function',
-    inputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
-    name: 'tokenImageURL',
     outputs: [{ name: '', internalType: 'string', type: 'string' }],
     stateMutability: 'view',
   },
@@ -2890,15 +2882,6 @@ export const useReadNftMilhasSymbol = /*#__PURE__*/ createUseReadContract({
   abi: nftMilhasAbi,
   functionName: 'symbol',
 })
-
-/**
- * Wraps __{@link useReadContract}__ with `abi` set to __{@link nftMilhasAbi}__ and `functionName` set to `"tokenImageURL"`
- */
-export const useReadNftMilhasTokenImageUrl =
-  /*#__PURE__*/ createUseReadContract({
-    abi: nftMilhasAbi,
-    functionName: 'tokenImageURL',
-  })
 
 /**
  * Wraps __{@link useReadContract}__ with `abi` set to __{@link nftMilhasAbi}__ and `functionName` set to `"tokenURI"`

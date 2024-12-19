@@ -1,14 +1,13 @@
 import {
   useWriteNftMilhasCreateToken,
   useWriteNftMilhasBuyNft,
-  useReadNftMilhasTokenImageUrl,
   useReadNftMilhasPrice,
 } from "../generated";
 
 export const useNftFunctions = () => {
   // Endereço do contrato
 
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const contractAddress = "0x4cf9cAC008AE6EfcBcC77e7B6Cd805A3df14E05E";
 
   const {
     writeContractAsync: writeNftMilhasCreateToken,
@@ -39,21 +38,6 @@ export const useNftFunctions = () => {
     }
   };
 
-  const getNftImageUrl = async (tokenId: number) => {
-    try {
-      const {
-        data: readNftImage,
-        isPending: isTokenImageUrlLoading,
-        isError: isTokenImageUrlError,
-      } = useReadNftMilhasTokenImageUrl({
-        address: contractAddress,
-        args: [BigInt(tokenId)],
-      });
-      return { readNftImage, isTokenImageUrlLoading, isTokenImageUrlError };
-    } catch (error) {
-      return error;
-    }
-  };
 
   const buyNft = async (tokenId: number) => {
     const bigIntTokenId = BigInt(tokenId);
@@ -70,13 +54,13 @@ export const useNftFunctions = () => {
     }
   };
 
-  const createNFT = async (tokenId: number, tokenImage: string, price: number) => {
+  const createNFT = async (tokenId: number, price: number) => {
     const bigIntTokenId = BigInt(tokenId);
     const bigIntPrice = BigInt(price);
     try {
       const tx = await writeNftMilhasCreateToken({
         address: contractAddress,
-        args: [bigIntTokenId, tokenImage, bigIntPrice],
+        args: [bigIntTokenId, bigIntPrice],
       });
       console.log("Token created:", tx);
       return tx;
@@ -95,7 +79,6 @@ export const useNftFunctions = () => {
 
     // Funções de leitura
     getNftPrice,
-    getNftImageUrl,
 
     // Estados de carregamento
     isCreatePending,
