@@ -22,21 +22,33 @@ export const useTokenFunctions = () => {
   };
 
   // Endereço do contrato
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const contractAddress = "0xe8789EaD2eB5f29d7ce9CA0A298C048CA5aeE774";
 
   // Função utilitária para saldo
   //FAZER UM GETBLANCE DO CONTRATO PRA VER SE DA PRA COMPRAR OU SE NN TEM MAIS TOKENS NO CONTRATO
-  const getBalance = (account: string) => {
+  const getBalance = async (account: string): Promise<number> => {
+    if (!account) return 0;
+  
     try {
-      const { data: balance, isPending: isBalanceLoading } = useReadPoliMilhasBalanceOf({
+      const formattedAddress = validateAndFormatAddress(account);
+      const { data } = useReadPoliMilhasBalanceOf({
         address: contractAddress,
-        args: [validateAndFormatAddress(account)],
+        args: [formattedAddress],
       });
-      return { balance, isBalanceLoading };
-    } catch (error) {
-      return error;
+  
+      // Verificar se o dado está disponível
+      if (data) {
+        return Number(data); // Converter BigInt para número
+      }
+      return 0;
+    } catch (err) {
+      console.error("Erro ao processar saldo:", err);
+      return 0;
     }
   };
+  
+  
+  
 
   // Hooks de leitura
   const {
@@ -115,7 +127,7 @@ export const useTokenFunctions = () => {
     try {
       const tx = await writePoliMilhasApprove({
         address: contractAddress,
-        args: [validateAndFormatAddress("0xB67884201f4957e672AE403D8B2c0f947E4A16CC"), bigIntAmount], 
+        args: [validateAndFormatAddress("0x4cf9cAC008AE6EfcBcC77e7B6Cd805A3df14E05E"), bigIntAmount], 
       });
       console.log("Token approved:", tx);
       return tx;
