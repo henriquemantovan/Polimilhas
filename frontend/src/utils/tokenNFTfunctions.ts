@@ -7,7 +7,7 @@ import {
 export const useNftFunctions = () => {
   // Endereço do contrato
 
-  const contractAddress = "0x4cf9cAC008AE6EfcBcC77e7B6Cd805A3df14E05E";
+  const contractAddress = "0x1b9F49b24064604059E345e47Aa22811681B36DA";
 
   const {
     writeContractAsync: writeNftMilhasCreateToken,
