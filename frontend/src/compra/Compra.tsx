@@ -140,7 +140,7 @@ const  Compra: React.FC = () => {
       alert("Por favor, selecione uma quantidade antes de comprar.");
       return;
     }
-    const value = Number(data) * selectedQuantity;
+    const value = Number(data) * selectedQuantity * 1e9;
     try {
       const tx = await buyTokens(value);
       if (tx) {
