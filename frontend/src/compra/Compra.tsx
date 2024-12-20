@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from "../Header";
 import { useTokenFunctions } from "../utils/token20Functions";
+import { useReadPoliMilhasTokenCost } from "../generated";
 
 const OpcaoButton = ({
   text,
@@ -118,23 +119,17 @@ const CompraBotao = ({ onClick }: { onClick: () => void }) => (
 
 const  Compra: React.FC = () => {
   const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null);
-  const { readPoliMilhasTokenCost, buyTokens } = useTokenFunctions();
-
-  const price = readPoliMilhasTokenCost ?? 0; 
-
-  if (readPoliMilhasTokenCost !== undefined) {
-    console.log("Token price:", readPoliMilhasTokenCost);
-  } else {
-    console.error("Failed to fetch token price: value is undefined.");
-  }
-  const numericPrice = Number(price);
+  const { buyTokens } = useTokenFunctions();
+  
+  const { data } = useReadPoliMilhasTokenCost({
+    address: "0xe8789EaD2eB5f29d7ce9CA0A298C048CA5aeE774",
+  })
 
   const quantities = [50, 100, 200, 400, 800, 1500, 3000, 5000];
   const opcoes = quantities.map((quantidade) => ({
     quantidade,
-    preco: numericPrice * quantidade, //isso ta em gwai 
+    preco: Number(data) * quantidade, //isso ta em gwai 
   }));
-    
 
   const handleSelectQuantity = (quantidade: number) => {
     setSelectedQuantity(quantidade);
@@ -145,7 +140,7 @@ const  Compra: React.FC = () => {
       alert("Por favor, selecione uma quantidade antes de comprar.");
       return;
     }
-    const value = numericPrice * selectedQuantity;
+    const value = Number(data) * selectedQuantity;
     try {
       const tx = await buyTokens(value);
       if (tx) {
