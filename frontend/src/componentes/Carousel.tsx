@@ -6,23 +6,42 @@ import R1000 from "../../images/R1000-removebg-preview.png";
 import R1500 from "../../images/R1500-removebg-preview.png";
 
 import "./Carousel.css";
+import {useNftFunctions} from "../utils/tokenNFTfunctions";
+
+
 
 const Carousel: React.FC = () => {
+
+
+
+
+
+   
   const [position, setPosition] = useState<number>(1);
 
-  const items = [
-    { image: R100, tokens: "1000 Tokens" },
-    { image: R300, tokens: "2800 Tokens" },
-    { image: R500, tokens: "4500 Tokens" },
-    { image: R1000, tokens: "8500 Tokens" },
-    { image: R1500, tokens: "12500 Tokens" },
+  const items = 
+  [
+    {id: 1, image: R100, tokens: "1000 Tokens" },
+    {id: 2, image: R300, tokens: "2800 Tokens" },
+    {id: 3, image: R500, tokens: "4500 Tokens" },
+    {id: 4, image: R1000, tokens: "8500 Tokens" },
+    {id: 5, image: R1500, tokens: "12500 Tokens" },
   ];
 
   const handleItemClick = (index: number): void => {
     setPosition(index + 1);
   };
 
-  
+  const {buyNft} = useNftFunctions()
+  const HandleCompra = async(itemID:number)=>{
+    try {const produto = await buyNft(itemID)}
+    catch (error){
+      console.error('erro', error);
+    }
+  }
+
+
+
   return (
     <div className="carousel-container">
       <main
@@ -39,7 +58,7 @@ const Carousel: React.FC = () => {
             <img src={item.image} alt={`Item ${index + 1}`} />
             <p className="item-text">{item.tokens}</p>
             <button className="item-button"
-                    onClick={() => alert("oi")}
+                    onClick={() => HandleCompra(item.id)}
             >Resgate seu cupom
             </button>
           </div>
