@@ -127,7 +127,7 @@ export const useTokenFunctions = () => {
     try {
       const tx = await writePoliMilhasApprove({
         address: contractAddress,
-        args: [validateAndFormatAddress("0x4cf9cAC008AE6EfcBcC77e7B6Cd805A3df14E05E"), bigIntAmount], 
+        args: [validateAndFormatAddress("0x1b9F49b24064604059E345e47Aa22811681B36DA"), bigIntAmount], 
       });
       console.log("Token approved:", tx);
       return tx;
