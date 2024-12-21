@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Header from "../Header";
 import { useTokenFunctions } from "../utils/token20Functions";
 import { useReadPoliMilhasTokenCost } from "../generated";
+import arquivoIcon from "../../images/aviao.png";
+
 
 const OpcaoButton = ({
   text,
@@ -165,6 +167,7 @@ const  Compra: React.FC = () => {
         color: "#fff",
         fontFamily: "'Asap', sans-serif",
         padding: "0.5rem",
+        zIndex: 1,
       }}>
       <Header />
 
@@ -196,6 +199,7 @@ const  Compra: React.FC = () => {
           marginBottom: "2rem",
           width: "100%",
           maxWidth: "700px",
+          zIndex: 1,
         }}>
         {opcoes.map((opcao) => (
           <OpcaoButton
@@ -207,8 +211,24 @@ const  Compra: React.FC = () => {
           />
         ))}
       </div>
-
-      <CompraBotao onClick={handleCompra} />
+      <div style = {{zIndex: 1}}>
+      <CompraBotao onClick={handleCompra}/>
+      </div>
+      
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `url(${arquivoIcon})`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "15%",
+          opacity: 0.03,
+          zIndex: 0,
+        }}
+      />
     </div>
   );
 };

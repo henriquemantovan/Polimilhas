@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import Header from "../Header";
 import { useTokenFunctions } from "../utils/token20Functions";
+import arquivoIcon from "../../images/aviao.png";
+
 
 
 const Admin: React.FC = () => {
   const {CreateNewToken, Withdraw, sendTokens, setTokenPrice } = useTokenFunctions();
-  const [tokensAdd, setTokensAdd] = useState<number>(0);
-  const [tokensSend, setTokensSend] = useState<number>(0);
-  const [tokensCost, setTokensCost] = useState<number>(0);
+  const [tokensAdd, setTokensAdd] = useState<string>(""); // Muda para string
+  const [tokensSend, setTokensSend] = useState<string>(""); // Muda para string
+  const [tokensCost, setTokensCost] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [products, setProducts] = useState<{ name: string; price: string, file?: File }[]>([]);
   const [newProduct, setNewProduct] = useState<{ name: string; price: string, file?: File }>({
@@ -19,9 +21,10 @@ const Admin: React.FC = () => {
   
   
   const handleAddTokens = async () => {
-    if (tokensAdd > 0) {
+    const tokensToAdd = Number(tokensAdd); // Converte para número
+    if (tokensToAdd > 0) {
       try {
-        const tx = await CreateNewToken(tokensAdd); // Chamando a função CreateNewToken
+        const tx = await CreateNewToken(tokensToAdd); // Chamando a função CreateNewToken
         if (tx) {
           alert(`Tokens aumentados em ${tokensAdd}!`);
           setTokensAdd(0);
@@ -72,9 +75,10 @@ const Admin: React.FC = () => {
   };
 
   const handleSendTokens = async () => {
-    if (tokensSend > 0) {
+    const tokensToSend = Number(tokensSend); // Converte para número
+    if (tokensToSend > 0) {
       try {
-        const tx = await sendTokens(address, tokensSend);
+        const tx = await sendTokens(address, tokensToSend);
         if (tx) {
           alert("Tokens enviados com sucesso!");
         } else {
@@ -91,8 +95,9 @@ const Admin: React.FC = () => {
   };
 
   const handleSetTokenPrice = async () => {
+    const tokensToCost = Number(tokensCost); // Converte para número
     try {
-      const tx = await setTokenPrice(tokensCost);
+      const tx = await setTokenPrice(tokensToCost);
       if (tx) {
         alert("Tokens enviados com sucesso!");
       } else {
@@ -121,9 +126,9 @@ const Admin: React.FC = () => {
   
       <h1
         style={{
-          marginTop: "9rem",
+          marginTop: "2.5rem",
           fontSize: "clamp(2.5rem, 5vw, 3.75rem)",
-          marginBottom: "3rem",
+          marginBottom: "2rem",
           color: "#2a738c",
         }}
       >
@@ -138,6 +143,7 @@ const Admin: React.FC = () => {
           gap: "2rem",
           width: "100%",
           maxWidth: "1200px",
+          zIndex: 1,
         }}
       >
         {/* Amentar Tokens */}
@@ -153,7 +159,7 @@ const Admin: React.FC = () => {
           <input
             type="number"
             value={tokensAdd}
-            onChange={(e) => setTokensAdd(Number(e.target.value))}
+            onChange={(e) => setTokensAdd(e.target.value)}
             placeholder="Quantidade de tokens"
             style={{
               padding: "0.5rem",
@@ -341,7 +347,7 @@ const Admin: React.FC = () => {
           <input
             type="number"
             value={tokensSend}
-            onChange={(e) => setTokensSend(Number(e.target.value))}
+            onChange={(e) => setTokensSend(e.target.value)}
             placeholder="Quantidade de Tokens"
             style={{
               padding: "0.5rem",
@@ -386,7 +392,7 @@ const Admin: React.FC = () => {
           <input
             type="number"
             value={tokensCost}
-            onChange={(e) => setTokensCost(Number(e.target.value))}
+            onChange={(e) => setTokensCost(e.target.value)}
             placeholder="Preço do Token"
             style={{
               padding: "0.5rem",
@@ -418,6 +424,20 @@ const Admin: React.FC = () => {
           </button>
         </div>
       </div>
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `url(${arquivoIcon})`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "15%",
+          opacity: 0.03,
+          zIndex: 0,
+        }}
+      />
     </div>
   );
   
