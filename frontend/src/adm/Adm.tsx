@@ -6,9 +6,9 @@ import arquivoIcon from "../../images/aviao.png";
 
 
 const Admin: React.FC = () => {
-  const {CreateNewToken, Withdraw, sendTokens, setTokenPrice } = useTokenFunctions();
+  const {CreateNewToken, Withdraw, senToAnotherUser, setTokenPrice } = useTokenFunctions();
   const [tokensAdd, setTokensAdd] = useState<string>(""); // Muda para string
-  const [tokensSend, setTokensSend] = useState<string>(""); // Muda para string
+  const [tokensSend, setTokensSend] = useState<number>(0); // Muda para string
   const [tokensCost, setTokensCost] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [products, setProducts] = useState<{ name: string; price: string, file?: File }[]>([]);
@@ -27,7 +27,6 @@ const Admin: React.FC = () => {
         const tx = await CreateNewToken(tokensToAdd); // Chamando a função CreateNewToken
         if (tx) {
           alert(`Tokens aumentados em ${tokensAdd}!`);
-          setTokensAdd(0);
         } else {
           alert("Erro ao criar novos tokens.");
         }
@@ -75,10 +74,9 @@ const Admin: React.FC = () => {
   };
 
   const handleSendTokens = async () => {
-    const tokensToSend = Number(tokensSend); // Converte para número
-    if (tokensToSend > 0) {
+    if (tokensSend > 0) {
       try {
-        const tx = await sendTokens(address, tokensToSend);
+        const tx = await senToAnotherUser(tokensSend, address);
         if (tx) {
           alert("Tokens enviados com sucesso!");
         } else {
@@ -347,7 +345,7 @@ const Admin: React.FC = () => {
           <input
             type="number"
             value={tokensSend}
-            onChange={(e) => setTokensSend(e.target.value)}
+            onChange={(e) => setTokensSend(Number(e.target.value))} // Converte para número
             placeholder="Quantidade de Tokens"
             style={{
               padding: "0.5rem",
