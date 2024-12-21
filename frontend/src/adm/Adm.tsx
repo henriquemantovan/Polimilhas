@@ -379,7 +379,7 @@ const Admin: React.FC = () => {
           </button>
         </div>
   
-        {/* Definir Preço do Token */}
+        {/* Definir Preço do Token a*/}
         <div
           style={{
             background: "#1c3f5a",
