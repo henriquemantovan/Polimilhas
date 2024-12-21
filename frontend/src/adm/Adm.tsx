@@ -5,7 +5,9 @@ import { useTokenFunctions } from "../utils/token20Functions";
 
 const Admin: React.FC = () => {
   const {CreateNewToken, Withdraw, sendTokens, setTokenPrice } = useTokenFunctions();
-  const [tokens, setTokens] = useState<number>(0);
+  const [tokensAdd, setTokensAdd] = useState<number>(0);
+  const [tokensSend, setTokensSend] = useState<number>(0);
+  const [tokensCost, setTokensCost] = useState<number>(0);
   const [address, setAddress] = useState<string>("");
   const [products, setProducts] = useState<{ name: string; price: string, file?: File }[]>([]);
   const [newProduct, setNewProduct] = useState<{ name: string; price: string, file?: File }>({
@@ -17,12 +19,12 @@ const Admin: React.FC = () => {
   
   
   const handleAddTokens = async () => {
-    if (tokens > 0) {
+    if (tokensAdd > 0) {
       try {
-        const tx = await CreateNewToken(tokens); // Chamando a função CreateNewToken
+        const tx = await CreateNewToken(tokensAdd); // Chamando a função CreateNewToken
         if (tx) {
-          alert(`Tokens aumentados em ${tokens}!`);
-          setTokens(0);
+          alert(`Tokens aumentados em ${tokensAdd}!`);
+          setTokensAdd(0);
         } else {
           alert("Erro ao criar novos tokens.");
         }
@@ -70,22 +72,27 @@ const Admin: React.FC = () => {
   };
 
   const handleSendTokens = async () => {
-    try {
-      const tx = await sendTokens(address, tokens);
-      if (tx) {
-        alert("Tokens enviados com sucesso!");
-      } else {
-        alert("Falha ao enviar tokens.");
+    if (tokensSend > 0) {
+      try {
+        const tx = await sendTokens(address, tokensSend);
+        if (tx) {
+          alert("Tokens enviados com sucesso!");
+        } else {
+          alert("Falha ao enviar tokens.");
+        }
+      } catch (error) {
+        console.error("Erro ao enviar tokens:", error);
+        alert("Ocorreu um erro ao tentar enviar tokens.");
       }
-    } catch (error) {
-      console.error("Erro ao enviar tokens:", error);
-      alert("Ocorreu um erro ao tentar enviar tokens.");
+    } else {
+      alert("Insira um valor válido de tokens.");
     }
+
   };
 
   const handleSetTokenPrice = async () => {
     try {
-      const tx = await setTokenPrice(tokens);
+      const tx = await setTokenPrice(tokensCost);
       if (tx) {
         alert("Tokens enviados com sucesso!");
       } else {
@@ -145,8 +152,8 @@ const Admin: React.FC = () => {
           <h2 style={{ marginBottom: "1rem", color: "#fff" }}>Aumentar Tokens</h2>
           <input
             type="number"
-            value={tokens}
-            onChange={(e) => setTokens(Number(e.target.value))}
+            value={tokensAdd}
+            onChange={(e) => setTokensAdd(Number(e.target.value))}
             placeholder="Quantidade de tokens"
             style={{
               padding: "0.5rem",
@@ -333,8 +340,8 @@ const Admin: React.FC = () => {
           />
           <input
             type="number"
-            value={tokens}
-            onChange={(e) => setTokens(Number(e.target.value))}
+            value={tokensSend}
+            onChange={(e) => setTokensSend(Number(e.target.value))}
             placeholder="Quantidade de Tokens"
             style={{
               padding: "0.5rem",
@@ -378,8 +385,8 @@ const Admin: React.FC = () => {
           <h2 style={{ marginBottom: "1rem", color: "#fff" }}>Definir Preço do Token</h2>
           <input
             type="number"
-            value={tokens}
-            onChange={(e) => setTokens(Number(e.target.value))}
+            value={tokensCost}
+            onChange={(e) => setTokensCost(Number(e.target.value))}
             placeholder="Preço do Token"
             style={{
               padding: "0.5rem",

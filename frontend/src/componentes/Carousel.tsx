@@ -12,20 +12,15 @@ import {useNftFunctions} from "../utils/tokenNFTfunctions";
 
 const Carousel: React.FC = () => {
 
-
-
-
-
-   
   const [position, setPosition] = useState<number>(1);
 
   const items = 
   [
-    {id: 1, image: R100, tokens: "1000 Tokens" },
-    {id: 2, image: R300, tokens: "2800 Tokens" },
-    {id: 3, image: R500, tokens: "4500 Tokens" },
-    {id: 4, image: R1000, tokens: "8500 Tokens" },
-    {id: 5, image: R1500, tokens: "12500 Tokens" },
+    {id: 4, image: R100, tokens: "50 Tokens" },
+    {id: 5, image: R300, tokens: "140 Tokens" },
+    {id: 6, image: R500, tokens: "225 Tokens" },
+    {id: 7, image: R1000, tokens: "425 Tokens" },
+    {id: 8, image: R1500, tokens: "625 Tokens" },
   ];
 
   const handleItemClick = (index: number): void => {
